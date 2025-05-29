@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include <iostream>
 
-Enemy::Enemy(int id, const std::string& name, int health, int attack, int experience)
+Enemy::Enemy(std::string id, const std::string& name, int health, int attack, int experience)
 	: id(id), name(name), health(health), attack(attack), experience(experience) {}
 
 int Enemy::getAttack() { return attack; }

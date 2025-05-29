@@ -1,33 +1,27 @@
 #pragma once
 #include <string>
+#include "MeleeWeapon.h"
+#include "Gun.h"
 class Player 
 {
-private:
-	std::string name;
-	int health;
-	int MaxHealth;
-	int MentalHealth;
-	int level;
-	int experience;
-	int attack;
-	bool defend;
-	//Melee CurrentMelee;
-	//Gun CurrentGun;
-	//Armor CurrentArmor;
 public:
-	Player(const std::string& name);
+	std::string name = "";
+	int health = 100;
+	int MaxHealth = 100;
+	int MentalHealth = 100;
+	int level = 1;
+	int experience = 0;
+	int attack = 0;
+	bool defend = 0;
+	MeleeWeapon CurrentMelee;
+	GunWeapon CurrentGun;
+	Player(MeleeWeapon& melee, GunWeapon& gun);
+	//Armor CurrentArmor;
 	void takeDamage(int damage);
-	int getAttack();
 	//void heal(int amount);
-	//void defend();
-	void setHealth(int amount);
-	int getHealth();
-	void setMentalHealth(int amount);
-	int getMentalHealth();
 	bool isAlive();
-	void setDefend();
+	/*void setDefend();
 	void endDefend();
-	bool isDefend();
+	bool isDefend();*/
 	void GainExperience(int amount);
-
 };

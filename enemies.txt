@@ -1,0 +1,12 @@
+[1]
+name=shadow
+health=50
+attack=10
+experience=20
+
+[2]
+name=fear
+health=75
+attack=20
+experience=30
+

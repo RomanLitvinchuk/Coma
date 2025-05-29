@@ -1,0 +1,5 @@
+[1]
+name=pm
+damage=40
+accuracy=70
+cooldown=2

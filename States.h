@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Player.h"
 
 enum class States {
     MAIN_MENU,
@@ -13,5 +13,7 @@ enum class States {
 
 class GameState 
 {
+public:
     States currentState = States::MAIN_MENU;
+    //Player player;
 };

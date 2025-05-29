@@ -10,4 +10,5 @@ public:
 
 	void handleMainMenu(int choice);
 	void handleGameMenu(int choice);
+	void handlePlayerMenu(int choice);
 };

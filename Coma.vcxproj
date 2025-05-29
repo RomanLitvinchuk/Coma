@@ -131,7 +131,10 @@
     <ClCompile Include="Coma.cpp" />
     <ClCompile Include="CombatSystem.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyLoader.cpp" />
     <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="GunLoader.cpp" />
+    <ClCompile Include="MeleeLoader.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="States.cpp" />
     <ClCompile Include="TextView.cpp" />
@@ -140,6 +143,8 @@
     <ClInclude Include="CombatSystem.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameController.h" />
+    <ClInclude Include="Gun.h" />
+    <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="States.h" />
     <ClInclude Include="TextView.h" />

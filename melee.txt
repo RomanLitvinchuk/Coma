@@ -1,0 +1,9 @@
+[1]
+name=knife
+damage=20
+accuracy=80
+
+[2]
+name=sword
+damage=40
+accuracy=70
