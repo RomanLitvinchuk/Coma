@@ -14,6 +14,7 @@ public:
 	static void ShowCombatMenu();
 	static void showMessage(const std::string& str);
 	static void showPlayerMenu(const Player& player);
+	static void showLevelMenu(const Player& player);
 	static void showEnemyList(const std::vector<Enemy>& enemies);
 	static void showMeleeStats(const MeleeWeapon& melee);
 };

@@ -5,7 +5,8 @@ enum class States {
     MAIN_MENU,
     GAME_MENU,
     COMBAT_MENU,
-    PLAYER_MENU
+    PLAYER_MENU,
+    LEVEL_MENU
 };
 
 

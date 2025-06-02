@@ -1,5 +1,6 @@
 #pragma once
 #include "States.h"
+#include "Player.h"
 
 class GameController 
 {
@@ -11,4 +12,5 @@ public:
 	void handleMainMenu(int choice);
 	void handleGameMenu(int choice);
 	void handlePlayerMenu(int choice);
+	void handleLevelMenu(int choice, Player& player);
 };

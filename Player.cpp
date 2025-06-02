@@ -18,7 +18,6 @@ void Player::GainExperience(int amount)
 	{
 		++level;
 		std::cout << u8"Вы достигли уровня " << level << "!\n";
-		MaxHealth += 10;
 		health = MaxHealth;
 		experience -= 100;
 	}

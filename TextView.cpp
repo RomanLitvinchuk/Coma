@@ -42,13 +42,31 @@ void TextView::ShowCombatMenu()
 void TextView::showPlayerMenu(const Player& player)
 {
 	std::cout << u8"===========PLAYER===========\n"
-		<< u8"Здоровье: " << player.health << "\n"
-		<< u8"Рассудок: " << player.MentalHealth << "\n"
-		<< u8"Уровень: " << player.level << "\n"
-		<< u8"Опыта до следующего уровня: " << 100 - player.experience << "\n"
-		<< u8"Оружие: " << player.CurrentMelee.name << "\n"
-		<< u8"Пистолет: " << player.CurrentGun.name << "\n"
+		<< u8"Здоровье: " << player.getHealth() << "\n"
+		<< u8"Рассудок: " << player.getMentalHealth() << "\n"
+		<< u8"Уровень: " << player.getLevel() << "\n"
+		<< u8"Опыта до следующего уровня: " << 100 - player.getExperience() << "\n"
+		<< u8"Оружие: " << player.CurrentMelee.getName() << "\n"
+		<< u8"Пистолет: " << player.CurrentGun.getName() << "\n"
+		<< u8"[1] Назад\n"
+		<< u8"[2] Прокачка\n";
+		
+
+}
+
+void TextView::showLevelMenu(const Player& player) 
+{
+	std::cout << u8"===========ПРОКАЧКА===========\n"
+		<< u8"Доступные очки характеристик: " << player.getLevelPoints() << "\n"
+		<< u8"Максимальное здоровье: " << player.getMaxHealth() << "\n"
+		<< u8"Мастерство ближнего боя: " << player.getMeleeLevel() << "\n"
+		<< u8"Мастерство дальнего боя: " << player.getGunLevel() << "\n"
+		<< u8"Интеллект: " << player.getIntelligence() << "\n"
 		<< u8"[1] Назад\n";
+		std::cout << u8"[2] Прокачать макс. здоровье\n"
+			<< u8"[3] Прокачать ближний бой\n"
+			<< u8"[4] Прокачать дальний бой\n"
+			<< u8"[5] Прокачать интеллект\n";
 }
 
 void TextView::showEnemyList(const std::vector<Enemy>& enemies) 
@@ -65,9 +83,9 @@ void TextView::showEnemyList(const std::vector<Enemy>& enemies)
 
 void TextView::showMeleeStats(const MeleeWeapon& melee) 
 {
-	std::cout << u8"[" << melee.id << u8"]" << melee.name << "\n"
-		<< u8"Урон: " << melee.damage << "\n"
-		<< u8"Точность: " << melee.accuracy << "\n";
+	std::cout << u8"[" << melee.getID() << u8"]" << melee.getName() << "\n"
+		<< u8"Урон: " << melee.getDamage() << "\n"
+		<< u8"Точность: " << melee.getAccuracy() << "\n";
 }
 
 

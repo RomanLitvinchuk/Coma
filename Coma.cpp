@@ -19,6 +19,8 @@ int main()
 		MeleeWeapon ExampleMelee = MeleeLoader("melee.txt", "1");
 		GunWeapon ExampleGun = GunLoader("guns.txt", "1");
 		Player player(ExampleMelee, ExampleGun);
+		int lp = 10;
+		player.setLevelPoints(lp);
 		std::string input;
 		while (isRunning) 
 		{
@@ -30,14 +32,8 @@ int main()
 			{
 				TextView::showMainMenu();
 				std::cin >> input;
-				try {
-					int choice = std::stoi(input);
-					controller.handleMainMenu(choice);
-				}
-				catch (...)
-				{
-					TextView::showMessage(u8"Некорректный ввод");
-				}
+				int choice = std::stoi(input);
+				controller.handleMainMenu(choice);
 				break;
 			}
 
@@ -45,15 +41,8 @@ int main()
 			{
 				TextView::showGameMenu();
 				std::cin >> input;
-				try 
-				{
-					int choice = std::stoi(input);
-					controller.handleGameMenu(choice);
-				}
-				catch (...) 
-				{
-					TextView::showMessage(u8"Некорректный ввод");
-				}
+				int choice = std::stoi(input);
+				controller.handleGameMenu(choice);
 				break;
 			}
 
@@ -61,15 +50,16 @@ int main()
 			{
 				TextView::showPlayerMenu(player);
 				std::cin >> input;
-				try 
-				{
-					int choice = std::stoi(input);
-					controller.handlePlayerMenu(choice);
-				}
-				catch (...) 
-				{
-					TextView::showMessage(u8"Некорректный ввод");
-				}
+				int choice = std::stoi(input);
+				controller.handlePlayerMenu(choice);
+				break;
+			}
+			case States::LEVEL_MENU:
+			{
+				TextView::showLevelMenu(player);
+				std::cin >> input;
+				int choice = std::stoi(input);
+				controller.handleLevelMenu(choice, player);
 				break;
 			}
 
