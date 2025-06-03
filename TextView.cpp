@@ -30,13 +30,29 @@ void TextView::showGameMenu()
 		<< u8"========================\n";
 }
 
-void TextView::ShowCombatMenu()
+void TextView::ShowCombatMenu(const Player& player)
 {
 	std::cout << u8"========================\n"
 		<< u8"[1] Атака\n"
 		<< u8"[2] Защита\n"
 		<< u8"[3] Предметы\n"
-		<< u8"========================";
+		<< u8"[4] Осмотр противников\n" 
+		<< u8"Здоровье: " << player.getHealth() << "\n"
+		<< u8"========================\n";
+}
+
+void TextView::ShowEnemyListInCombat(const std::vector<Enemy>& enemies) 
+{
+	std::cout << u8"========================\n"
+		<< u8"[0] Назад\n";
+
+	for (int i = 1; i <= enemies.size(); ++i) 
+	{
+		std::cout << u8"[" << i << "]" << enemies[i-1].getName() << " " << enemies[i-1].getHealth() << "\n";
+	}
+	std::cout << u8"========================\n";
+
+
 }
 
 void TextView::showPlayerMenu(const Player& player)
@@ -74,12 +90,15 @@ void TextView::showEnemyList(const std::vector<Enemy>& enemies)
 	std::cout << u8"\n============ВРАГИ============\n";
 		for (const auto& curenemy : enemies) 
 		{
-			std::cout << u8"\n[" << curenemy.id << u8"]" << curenemy.name << "\n"
-				<< u8"Здоровье: " << curenemy.health << "\n"
-				<< u8"Урон: " << curenemy.attack;
+			std::cout << u8"\n[" << curenemy.getID() << u8"]" << curenemy.getName() << "\n"
+				<< u8"Здоровье: " << curenemy.getHealth() << "\n"
+				<< u8"Урон: " << curenemy.getAttack();
 			std::cout << "\n";
 		}
+		std::cout << u8"[0] Назад\n"
+			<< u8"=============================\n";
 }
+
 
 void TextView::showMeleeStats(const MeleeWeapon& melee) 
 {

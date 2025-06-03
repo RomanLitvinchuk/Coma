@@ -15,14 +15,18 @@ private:
 	int MeleeLevel = 1;
 	int GunLevel = 1;
 	int intelligence = 1;
+	bool isDefend = false;
 public:
 	MeleeWeapon CurrentMelee;
 	GunWeapon CurrentGun;
-	bool defend = 0;
+	
 	Player(MeleeWeapon& melee, GunWeapon& gun);
 	//Armor CurrentArmor;
 	void takeDamage(int damage);
-	bool isAlive();
+	bool isAlive() const;
+	//bool IsDefending() const { return isDefend; }
+	void setDefending() { isDefend = true; }
+	void StopDefending() { isDefend = false; }
 	void GainExperience(int amount);
 	int getHealth() const { return health; }
 	int getMaxHealth() const { return MaxHealth; }
