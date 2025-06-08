@@ -1,0 +1,7 @@
+[1]
+name=Pie
+healAmount=30
+
+[2]
+name=Cola
+healAmount=20

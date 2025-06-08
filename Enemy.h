@@ -20,4 +20,4 @@ public:
 	int getHealth() const { return health; }
 };
 
-std::vector<Enemy> EnemyLoader(const std::string& filename, const std::vector<int>& idsToLoad);
+std::vector<Enemy> LoadAllEnemies(const std::string& filename);

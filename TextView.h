@@ -18,4 +18,5 @@ public:
 	static void showEnemyList(const std::vector<Enemy>& enemies);
 	static void ShowEnemyListInCombat(const std::vector<Enemy>& enemies);
 	static void showMeleeStats(const MeleeWeapon& melee);
+	static void ShowInventoryInCombat(const Player& player);
 };

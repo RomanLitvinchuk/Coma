@@ -2,6 +2,7 @@
 #include <string>
 #include "MeleeWeapon.h"
 #include "Gun.h"
+#include "inventory.h"
 class Player 
 {
 private:
@@ -19,7 +20,7 @@ private:
 public:
 	MeleeWeapon CurrentMelee;
 	GunWeapon CurrentGun;
-	
+	Inventory inventory;
 	Player(MeleeWeapon& melee, GunWeapon& gun);
 	//Armor CurrentArmor;
 	void takeDamage(int damage);
@@ -44,4 +45,5 @@ public:
 	void GunLevelUp() { ++GunLevel; }
 	void IntelligenceUp() { ++intelligence; }
 	void MaxHealthUp() { MaxHealth += 20; }
+	void Heal(int amount) { health += amount; }
 };

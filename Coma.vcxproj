@@ -134,6 +134,8 @@
     <ClCompile Include="EnemyLoader.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GunLoader.cpp" />
+    <ClCompile Include="inventory.cpp" />
+    <ClCompile Include="item.cpp" />
     <ClCompile Include="MeleeLoader.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="States.cpp" />
@@ -142,8 +144,11 @@
   <ItemGroup>
     <ClInclude Include="CombatSystem.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="Gun.h" />
+    <ClInclude Include="inventory.h" />
+    <ClInclude Include="item.h" />
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="States.h" />

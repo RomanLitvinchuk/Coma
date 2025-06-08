@@ -9,7 +9,8 @@ enum class States {
     CHOOSE_ENEMIES_MENU,
     ENEMY_LIST_MENU,
     PLAYER_MENU,
-    LEVEL_MENU
+    LEVEL_MENU,
+    INVENTORY_IN_COMBAT_MENU
 };
 
 

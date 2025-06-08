@@ -131,7 +131,9 @@ CombatSystem::CombatState GameController::handleCombatMenu(int choice, Player& p
 		if (!player.isAlive()) { return CombatSystem::ENEMY_WIN; }
 		else { return CombatSystem::CONTINUE; }
 		break;
-	//case 3: Предметы
+	case 3:
+		state->currentState = States::INVENTORY_IN_COMBAT_MENU;
+		break;
 	case 4:
 		state->currentState = States::ENEMY_LIST_MENU;
 		return CombatSystem::CONTINUE;
@@ -196,5 +198,33 @@ void GameController::handleEnemyListMenu(int choice)
 	default:
 		std::cin.ignore();
 		TextView::showMessage(u8"Некорректный ввод!");
+	}
+}
+
+void GameController::handleInventoryInCombatMenu(int choice, Player& player) 
+{
+	switch (choice) 
+	{
+	case 0:
+		state->currentState = States::COMBAT_MENU;
+		break;
+	default:
+		if (choice <= player.inventory.items.size()) 
+		{
+			if (player.getHealth() < player.getMaxHealth()) 
+			{
+				player.Heal(player.inventory.items[choice - 1].getHealAmount());
+				TextView::showMessage(u8"Вы использовали " + player.inventory.items[choice - 1].getName() + u8", вы восстановили " + std::to_string(player.inventory.items[choice - 1].getHealAmount()));
+				std::cin.ignore();
+				player.inventory.RemoveItem(player.inventory.items[choice - 1].getID());
+			}
+			else { TextView::showMessage(u8"У вас уже полное здоровье"); }
+			std::cin.ignore();
+		}
+		else 
+		{
+			std::cin.ignore();
+			TextView::showMessage(u8"Некорректный ввод!");
+		}
 	}
 }

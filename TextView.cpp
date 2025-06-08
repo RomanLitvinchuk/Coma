@@ -112,3 +112,14 @@ void TextView::showMessage(const std::string& str)
 {
 	std::cout << u8"\n" << str << "\n";
 }
+
+void TextView::ShowInventoryInCombat(const Player& player)
+{
+	std::cout << u8"\n===============ÏÐÅÄÌÅÒÛ===============\n"
+		<< u8"[0] Íàçàä\n";
+	for (int i = 1; i <= player.inventory.items.size(); ++i) 
+	{
+		std::cout << u8"[" << i << u8"] " << player.inventory.items[i - 1].getName() << " " << player.inventory.items[i - 1].getHealAmount() << "\n";
+	}
+	std::cout << u8"======================================\n";
+}
