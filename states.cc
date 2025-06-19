@@ -1,2 +1,2 @@
-#include "States.h"
+#include "states.h"
 #include <iostream>

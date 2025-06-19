@@ -1,6 +1,8 @@
-#pragma once
-#include "Player.h"
-#include "Enemy.h"
+#ifndef STATES_H
+#define STATES_H
+
+#include "player.h"
+#include "enemy.h"
 #include <vector>
 enum class States {
     MAIN_MENU,
@@ -24,3 +26,5 @@ public:
     States currentState = States::MAIN_MENU;
     GameState(Player& player, std::vector<Enemy>& enemies) : player(player), enemies(enemies) {}
 };
+
+#endif 

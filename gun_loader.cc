@@ -1,5 +1,5 @@
-#include "Gun.h"
-#include "TextView.h"
+#include "gun.h"
+#include "view.h"
 #include <fstream>
 #include <string>
 #include <unordered_map>
@@ -10,7 +10,7 @@ GunWeapon GunLoader(const std::string& filename, const std::string& weaponId)
     std::ifstream file(filename);
 
     if (!file.is_open()) {
-        TextView::showMessage(u8"Failed to load file guns.txt");
+        View::ShowMessage(u8"Failed to load file guns.txt");
         return GunWeapon("", "", 0, 0, 0);
     }
 
@@ -33,7 +33,7 @@ GunWeapon GunLoader(const std::string& filename, const std::string& weaponId)
                     );
                 }
                 catch (const std::exception& e) {
-                    TextView::showMessage(u8"Failed to parsing gun data");
+                    View::ShowMessage(u8"Failed to parsing gun data");
                     return GunWeapon("", "", 0, 0, 0);
                 }
             }
@@ -67,10 +67,10 @@ GunWeapon GunLoader(const std::string& filename, const std::string& weaponId)
             );
         }
         catch (const std::exception& e) {
-            TextView::showMessage(u8"Error to parsing gun data");
+            View::ShowMessage(u8"Error to parsing gun data");
         }
     }
 
-    TextView::showMessage(u8"Failed to found a gun ID");
+    View::ShowMessage(u8"Failed to found a gun ID");
     return GunWeapon("", "", 0, 0, 0);
 }

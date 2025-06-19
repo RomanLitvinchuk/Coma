@@ -1,4 +1,5 @@
 #include "item.h"
+#include "view.h"
 #include <vector>
 #include <string>
 #include <fstream>
@@ -11,7 +12,7 @@ std::vector<Item> LoadAllItems(const std::string& filename)
 
     if (!file.is_open())
     {
-        // Обработка ошибки открытия файла
+        View::ShowMessage(u8"Failed to load file items.txt");
         return items;
     }
 
@@ -39,7 +40,7 @@ std::vector<Item> LoadAllItems(const std::string& filename)
                 }
                 catch (const std::exception& e)
                 {
-                    // Обработка ошибки парсинга данных
+                    View::ShowMessage(u8"Failed to parsing item data");
                 }
 
                 currentItemData.clear();
@@ -52,7 +53,7 @@ std::vector<Item> LoadAllItems(const std::string& filename)
             }
             catch (const std::exception& e)
             {
-                // Обработка неверного формата ID
+                View::ShowMessage(u8"Invalid ID format");
                 currentId = -1;
             }
         }
@@ -82,7 +83,7 @@ std::vector<Item> LoadAllItems(const std::string& filename)
         }
         catch (const std::exception& e)
         {
-            // Обработка ошибки парсинга данных
+            View::ShowMessage(u8"Failed to parsing item data");
         }
     }
 
@@ -96,9 +97,9 @@ Item ItemFactory(const std::vector<Item>& allItems, const std::string& itemId)
     Item item("", "", 0);
     bool found = false;
 
-    // Ищем шаблон врага с нужным ID
+    // Ищем шаблон предмета с нужным ID
     for (const auto& templ : allItems) {
-        if (templ.getID() == itemId) {
+        if (templ.GetID() == itemId) {
             item = templ;
             return item;
         }

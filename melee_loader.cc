@@ -1,5 +1,5 @@
-#include "MeleeWeapon.h"
-#include "TextView.h"
+#include "melee_weapon.h"
+#include "view.h"
 #include <fstream>
 #include <string>
 #include <unordered_map>
@@ -10,7 +10,7 @@ MeleeWeapon MeleeLoader(const std::string& filename, const std::string& weaponId
     std::ifstream file(filename);
 
     if (!file.is_open()) {
-        TextView::showMessage(u8"Failed to load file melee.txt");
+        View::ShowMessage(u8"Failed to load file melee.txt");
         return MeleeWeapon("", "", 0, 0);
     }
 
@@ -32,7 +32,7 @@ MeleeWeapon MeleeLoader(const std::string& filename, const std::string& weaponId
                     );
                 }
                 catch (const std::exception& e) {
-                    TextView::showMessage(u8"Failed to parsing melee data");
+                    View::ShowMessage(u8"Failed to parsing melee data");
                     return MeleeWeapon("", "", 0, 0);
                 }
             }
@@ -65,10 +65,10 @@ MeleeWeapon MeleeLoader(const std::string& filename, const std::string& weaponId
             );
         }
         catch (const std::exception& e) {
-            TextView::showMessage(u8"Error to parsing melee data");
+            View::ShowMessage(u8"Error to parsing melee data");
         }
     }
 
-    TextView::showMessage(u8"Failed to found a melee ID");
+    View::ShowMessage(u8"Failed to found a melee ID");
     return MeleeWeapon("", "", 0, 0);
 }

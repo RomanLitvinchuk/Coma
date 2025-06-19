@@ -1,7 +1,9 @@
-#pragma once
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include <string>
-#include "MeleeWeapon.h"
-#include "Gun.h"
+#include "melee_weapon.h"
+#include "gun.h"
 #include "inventory.h"
 class Player 
 {
@@ -23,27 +25,29 @@ public:
 	Inventory inventory;
 	Player(MeleeWeapon& melee, GunWeapon& gun);
 	//Armor CurrentArmor;
-	void takeDamage(int damage);
-	bool isAlive() const;
+	void TakeDamage(int damage);
+	bool IsAlive() const;
 	//bool IsDefending() const { return isDefend; }
-	void setDefending() { isDefend = true; }
+	void SetDefending() { isDefend = true; }
 	void StopDefending() { isDefend = false; }
 	void GainExperience(int amount);
-	int getHealth() const { return health; }
-	int getMaxHealth() const { return MaxHealth; }
-	int getMentalHealth() const { return MentalHealth; }
-	int getLevel() const { return level; }
-	int getLevelPoints() const { return LevelPoints; }
-	void setLevelPoints(int amount) { LevelPoints = amount; }
-	int getExperience() const { return experience; }
-	std::string getPlayerName() const { return name; }
-	void setPlayerName(const std::string& NewName) { name = NewName; }
-	int getMeleeLevel() const { return MeleeLevel; }
-	int getGunLevel() const { return GunLevel; }
-	int getIntelligence() const { return intelligence; }
+	int GetHealth() const { return health; }
+	int GetMaxHealth() const { return MaxHealth; }
+	int GetMentalHealth() const { return MentalHealth; }
+	int GetLevel() const { return level; }
+	int GetLevelPoints() const { return LevelPoints; }
+	void SetLevelPoints(int amount) { LevelPoints = amount; }
+	int GetExperience() const { return experience; }
+	std::string GetPlayerName() const { return name; }
+	void SetPlayerName(const std::string& NewName) { name = NewName; }
+	int GetMeleeLevel() const { return MeleeLevel; }
+	int GetGunLevel() const { return GunLevel; }
+	int GetIntelligence() const { return intelligence; }
 	void MeleeLevelUp() { ++MeleeLevel; }
 	void GunLevelUp() { ++GunLevel; }
 	void IntelligenceUp() { ++intelligence; }
 	void MaxHealthUp() { MaxHealth += 20; }
 	void Heal(int amount) { health += amount; }
 };
+
+#endif

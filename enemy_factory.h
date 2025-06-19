@@ -1,7 +1,9 @@
-#pragma once
+#ifndef ENEMY_FACTORY_H
+#define ENEMY_FACTORY_H
+
 #include <vector>
 #include <string>
-#include "Enemy.h"
+#include "enemy.h"
 
 std::vector<Enemy> EnemyFactory(const std::vector<Enemy> allEnemies, const std::vector<std::string>& enemyIds) {
     std::vector<Enemy> enemies;
@@ -11,7 +13,7 @@ std::vector<Enemy> EnemyFactory(const std::vector<Enemy> allEnemies, const std::
 
         // »щем шаблон врага с нужным ID
         for (const auto& templ : allEnemies) {
-            if (templ.getID() == enemyId) {
+            if (templ.GetID() == enemyId) {
                 enemies.push_back(templ);
                 found = true;
                 break;
@@ -26,3 +28,5 @@ std::vector<Enemy> EnemyFactory(const std::vector<Enemy> allEnemies, const std::
 
     return enemies;
 }
+
+#endif

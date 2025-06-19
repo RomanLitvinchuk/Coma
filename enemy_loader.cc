@@ -1,5 +1,5 @@
-#include "Enemy.h"
-#include "TextView.h"
+#include "enemy.h"
+#include "view.h"
 #include <string>
 #include <vector>
 #include <fstream>
@@ -14,7 +14,7 @@ std::vector<Enemy> LoadAllEnemies(const std::string& filename)
     
     if (!file.is_open()) 
     {
-        //std::cerr << "Failed to open file: " << filename << std::endl;
+        View::ShowMessage(u8"Failed to load file enemies.txt");
         return enemies;
     }
 
@@ -44,7 +44,7 @@ std::vector<Enemy> LoadAllEnemies(const std::string& filename)
                 }
                 catch (const std::exception& e) 
                 {
-                    //std::cerr << "Error parsing enemy data for ID " << currentId << ": " << e.what() << std::endl;
+                    View::ShowMessage(u8"Failed to parsing enemy data");
                 }
                 
                 currentEnemyData.clear();
@@ -57,7 +57,7 @@ std::vector<Enemy> LoadAllEnemies(const std::string& filename)
             }
             catch (const std::exception& e) 
             {
-                //std::cerr << "Invalid enemy ID format: " << line << std::endl;
+                View::ShowMessage(u8"Invalid ID format");
                 currentId = -1;
             }
         }
@@ -89,7 +89,7 @@ std::vector<Enemy> LoadAllEnemies(const std::string& filename)
         }
         catch (const std::exception& e) 
         {
-            //std::cerr << "Error parsing enemy data for ID " << currentId << ": " << e.what() << std::endl;
+            View::ShowMessage(u8"Failed to parsing enemy data");
         }
     }
 

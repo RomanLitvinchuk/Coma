@@ -128,31 +128,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Coma.cpp" />
-    <ClCompile Include="CombatSystem.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyLoader.cpp" />
-    <ClCompile Include="GameController.cpp" />
-    <ClCompile Include="GunLoader.cpp" />
-    <ClCompile Include="inventory.cpp" />
-    <ClCompile Include="item.cpp" />
-    <ClCompile Include="MeleeLoader.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="States.cpp" />
-    <ClCompile Include="TextView.cpp" />
+    <ClCompile Include="combat_system.cc" />
+    <ClCompile Include="controller.cc" />
+    <ClCompile Include="enemy.cc" />
+    <ClCompile Include="enemy_loader.cc" />
+    <ClCompile Include="gun_loader.cc" />
+    <ClCompile Include="inventory.cc" />
+    <ClCompile Include="item.cc" />
+    <ClCompile Include="melee_loader.cc" />
+    <ClCompile Include="model.cc" />
+    <ClCompile Include="player.cc" />
+    <ClCompile Include="states.cc" />
+    <ClCompile Include="view.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CombatSystem.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyFactory.h" />
-    <ClInclude Include="GameController.h" />
-    <ClInclude Include="Gun.h" />
+    <ClInclude Include="combat_system.h" />
+    <ClInclude Include="enemy.h" />
+    <ClInclude Include="enemy_factory.h" />
+    <ClInclude Include="controller.h" />
+    <ClInclude Include="gun.h" />
     <ClInclude Include="inventory.h" />
     <ClInclude Include="item.h" />
-    <ClInclude Include="MeleeWeapon.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="States.h" />
-    <ClInclude Include="TextView.h" />
+    <ClInclude Include="melee_weapon.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="states.h" />
+    <ClInclude Include="view.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

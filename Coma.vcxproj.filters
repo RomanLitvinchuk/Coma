@@ -15,69 +15,69 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Coma.cpp">
+    <ClCompile Include="model.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="combat_system.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
+    <ClCompile Include="enemy.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="CombatSystem.cpp">
+    <ClCompile Include="enemy_loader.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="States.cpp">
+    <ClCompile Include="controller.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="TextView.cpp">
+    <ClCompile Include="gun_loader.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="GameController.cpp">
+    <ClCompile Include="inventory.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyLoader.cpp">
+    <ClCompile Include="item.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="MeleeLoader.cpp">
+    <ClCompile Include="melee_loader.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="GunLoader.cpp">
+    <ClCompile Include="player.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="item.cpp">
+    <ClCompile Include="states.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="inventory.cpp">
+    <ClCompile Include="view.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Enemy.h">
+    <ClInclude Include="enemy.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="States.h">
+    <ClInclude Include="states.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="player.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="CombatSystem.h">
+    <ClInclude Include="combat_system.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="TextView.h">
+    <ClInclude Include="view.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="GameController.h">
+    <ClInclude Include="controller.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="MeleeWeapon.h">
+    <ClInclude Include="melee_weapon.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Gun.h">
+    <ClInclude Include="gun.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyFactory.h">
+    <ClInclude Include="enemy_factory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="item.h">

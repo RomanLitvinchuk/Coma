@@ -1,4 +1,6 @@
-#pragma once
+#ifndef INVENTORY_H
+#define INVENTORY_H
+
 #include <vector>
 #include <string>
 #include "item.h"
@@ -10,3 +12,5 @@ public:
 	void AddItem(const std::string& itemID, const std::vector<Item>& allItems);
 	void RemoveItem(const std::string& itemID);
 };
+
+#endif

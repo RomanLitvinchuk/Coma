@@ -1,6 +1,8 @@
-#pragma once
-#include "Player.h"
-#include "Enemy.h"
+#ifndef COMBAT_SYSTEM_H
+#define COMBAT_SYSTEM_H
+
+#include "player.h"
+#include "enemy.h"
 #include <vector>
 
 class CombatSystem 
@@ -19,6 +21,8 @@ public:
 	CombatSystem(Player& player, std::vector<Enemy> enemies) : player(player), enemies(enemies) {}
 	static void PlayerAttack(Enemy& enemy, Player& player);
 	static void EnemyTurn(Player& player, std::vector<Enemy>& enemies);
-	void setExperience(int amount) { experience = amount; }
-	int getExperience() const { return experience; }
+	void SetExperience(int amount) { experience = amount; }
+	int GetExperience() const { return experience; }
 };
+
+#endif

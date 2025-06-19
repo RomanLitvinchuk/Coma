@@ -1,11 +1,11 @@
-#include "Player.h";
-#include "TextView.h"
+#include "player.h";
+#include "view.h"
 #include <iostream>
 
 Player::Player(MeleeWeapon& melee, GunWeapon& gun) : CurrentMelee(melee), CurrentGun(gun) {}
 
-bool Player::isAlive() const { return (health > 0 and MentalHealth > 0); }
-void Player::takeDamage(int damage) 
+bool Player::IsAlive() const { return (health > 0 and MentalHealth > 0); }
+void Player::TakeDamage(int damage) 
 {
 	if (!isDefend) 
 	{

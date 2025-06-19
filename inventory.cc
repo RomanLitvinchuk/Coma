@@ -12,7 +12,7 @@ void Inventory::RemoveItem(const std::string& itemID)
 {
     items.erase(
         std::remove_if(items.begin(), items.end(),
-            [&itemID](const Item& item) { return item.getID() == itemID; }),
+            [&itemID](const Item& item) { return item.GetID() == itemID; }),
         items.end()
     );
 }

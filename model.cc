@@ -1,14 +1,14 @@
 ﻿#include <iostream>
 #include <string>
 #include <Windows.h>
-#include "TextView.h"
-#include "Player.h"
-#include "States.h"
-#include "Enemy.h"
-#include "EnemyFactory.h"
-#include "GameController.h"
-#include "MeleeWeapon.h"
-#include "Gun.h"
+#include "view.h"
+#include "player.h"
+#include "states.h"
+#include "enemy.h"
+#include "enemy_factory.h"
+#include "controller.h"
+#include "melee_weapon.h"
+#include "gun.h"
 #include "item.h"
 #include "inventory.h"
 int main() 
@@ -27,72 +27,72 @@ int main()
 		std::vector<Enemy> enemies;
 		GameState state(player, enemies);
 		std::vector<std::string> IdOfEnemy = {"1"};
-		GameController controller(&state);
+		Controller controller(&state);
 		std::string input;
 		while (isRunning) 
 		{
 			std::cin.ignore();
-			TextView::ClearScreen();
+			View::ClearScreen();
 			switch (state.currentState) 
 			{
 			case States::MAIN_MENU: 
 			{
-				TextView::showMainMenu();
+				View::ShowMainMenu();
 				std::cin >> input;
 				int choice = std::stoi(input);
-				controller.handleMainMenu(choice);
+				controller.HandleMainMenu(choice);
 				break;
 			}
 
 			case States::GAME_MENU: 
 			{
-				TextView::showGameMenu();
+				View::ShowGameMenu();
 				std::cin >> input;
 				int choice = std::stoi(input);
-				controller.handleGameMenu(choice);
+				controller.HandleGameMenu(choice);
 				break;
 			}
 
 			case States::PLAYER_MENU: 
 			{
-				TextView::showPlayerMenu(player);
+				View::ShowPlayerMenu(player);
 				std::cin >> input;
 				int choice = std::stoi(input);
-				controller.handlePlayerMenu(choice);
+				controller.HandlePlayerMenu(choice);
 				break;
 			}
 			case States::LEVEL_MENU:
 			{
-				TextView::showLevelMenu(player);
+				View::ShowLevelMenu(player);
 				std::cin >> input;
 				int choice = std::stoi(input);
-				controller.handleLevelMenu(choice, player);
+				controller.HandleLevelMenu(choice, player);
 				break;
 			}
 			case States::COMBAT_MENU:
 			{
 				//CombatSystem battle(player, enemies);
 				if (state.enemies.empty()) { state.enemies = EnemyFactory(AllEnemies, IdOfEnemy); }
-				TextView::ShowCombatMenu(player);
+				View::ShowCombatMenu(player);
 				std::cin >> input;
 				int choice = std::stoi(input);
-				auto result = controller.handleCombatMenu(choice, player, state.enemies);
+				auto result = controller.HandleCombatMenu(choice, player, state.enemies);
 
 				switch (result) 
 				{
 				case CombatSystem::PLAYER_WIN:
 					for (auto& currentEnemy : state.enemies) 
 					{
-						player.GainExperience(currentEnemy.getExperience());
+						player.GainExperience(currentEnemy.GetExperience());
 					}
-					TextView::showMessage(u8"Победа!");
+					View::ShowMessage(u8"Победа!");
 					state.enemies.clear();
 					std::cin.ignore();
 					state.currentState = States::GAME_MENU;
 					break;
 				case CombatSystem::ENEMY_WIN:
 					state.enemies.clear();
-					TextView::showMessage(u8"Вы проиграли, возвращение в главное меню...");
+					View::ShowMessage(u8"Вы проиграли, возвращение в главное меню...");
 					std::cin.ignore();
 					state.currentState = States::MAIN_MENU;
 					break;
@@ -101,24 +101,24 @@ int main()
 			}
 			case States::CHOOSE_ENEMIES_MENU:
 			{
-				TextView::ShowEnemyListInCombat(state.enemies);
+				View::ShowEnemyListInCombat(state.enemies);
 				std::cin >> input;
 				int choice = std::stoi(input);
-				auto result = controller.handleChooseEnemyMenu(choice, player, state.enemies);
+				auto result = controller.HandleChooseEnemyMenu(choice, player, state.enemies);
 				switch (result)
 				{
 				case CombatSystem::PLAYER_WIN:
 					for (auto& currentEnemy : state.enemies)
 					{
-						player.GainExperience(currentEnemy.getExperience());
+						player.GainExperience(currentEnemy.GetExperience());
 					}
-					TextView::showMessage(u8"Победа!");
+					View::ShowMessage(u8"Победа!");
 					state.enemies.clear();
 					std::cin.ignore();
 					state.currentState = States::GAME_MENU;
 					break;
 				case CombatSystem::ENEMY_WIN:
-					TextView::showMessage(u8"Вы проиграли, возвращение в главное меню...");
+					View::ShowMessage(u8"Вы проиграли, возвращение в главное меню...");
 					std::cin.ignore();
 					state.currentState = States::MAIN_MENU;
 					break;
@@ -127,18 +127,18 @@ int main()
 			}
 			case States::ENEMY_LIST_MENU:
 			{
-				TextView::showEnemyList(state.enemies);
+				View::ShowEnemyList(state.enemies);
 				std::cin >> input;
 				int choice = std::stoi(input);
-				controller.handleEnemyListMenu(choice);
+				controller.HandleEnemyListMenu(choice);
 				break;
 			}
 			case States::INVENTORY_IN_COMBAT_MENU:
 			{
-				TextView::ShowInventoryInCombat(player);
+				View::ShowInventoryInCombat(player);
 				std::cin >> input;
 				int choice = std::stoi(input);
-				controller.handleInventoryInCombatMenu(choice, player);
+				controller.HandleInventoryInCombatMenu(choice, player);
 				break;
 			}
 
