@@ -1,0 +1,13 @@
+[1]
+name="Стартовая локация"
+description="Белые стены"
+connections={2}
+type=DEFAULT
+enemyIds={}
+
+[2]
+name="Вторая локация"
+description="Чёрные стены"
+connections={1}
+type=ENEMIES
+enemyIds={1}

@@ -51,6 +51,9 @@
     <ClCompile Include="view.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="room_loader.cc">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="enemy.h">
@@ -84,6 +87,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="inventory.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="room.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

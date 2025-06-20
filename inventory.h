@@ -1,16 +1,16 @@
-#ifndef INVENTORY_H
-#define INVENTORY_H
+#ifndef INVENTORY_H_
+#define INVENTORY_H_
 
-#include <vector>
 #include <string>
+#include <vector>
+
 #include "item.h"
 
-class Inventory 
-{
-public:
-	std::vector<Item> items;
-	void AddItem(const std::string& itemID, const std::vector<Item>& allItems);
-	void RemoveItem(const std::string& itemID);
+class Inventory {
+ public:
+  std::vector<Item> items;
+  void AddItem(const std::string& itemID, const std::vector<Item>& allItems);
+  void RemoveItem(const std::string& itemID);
 };
 
-#endif
+#endif  // INVENTORY_H_

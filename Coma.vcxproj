@@ -138,6 +138,7 @@
     <ClCompile Include="melee_loader.cc" />
     <ClCompile Include="model.cc" />
     <ClCompile Include="player.cc" />
+    <ClCompile Include="room_loader.cc" />
     <ClCompile Include="states.cc" />
     <ClCompile Include="view.cc" />
   </ItemGroup>
@@ -151,6 +152,7 @@
     <ClInclude Include="item.h" />
     <ClInclude Include="melee_weapon.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="room.h" />
     <ClInclude Include="states.h" />
     <ClInclude Include="view.h" />
   </ItemGroup>
