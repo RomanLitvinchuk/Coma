@@ -9,10 +9,10 @@
 #include "states.h"
 class Controller {
  private:
-  GameState* state;
+  GameState* state_;
 
  public:
-  Controller(GameState* state) : state(state) {}
+  Controller(GameState* state) : state_(state) {}
 
   void HandleMainMenu(int choice);
   void HandleGameMenu(int choice);
@@ -24,8 +24,8 @@ class Controller {
   CombatSystem::CombatState HandleChooseEnemyMenu(int choice, Player& player,
                                                   std::vector<Enemy>& enemies);
   void HandleInventoryInCombatMenu(int choice, Player& player);
-  void HandleRoomMenu(int choice, std::vector<Enemy>& allEnemies);
-  void HandleRoomChooseMenu(int choice, std::vector<Room>& allRooms);
+  void HandleRoomMenu(int choice, std::vector<Enemy>& all_enemies);
+  void HandleRoomChooseMenu(int choice, std::vector<Room>& all_rooms);
 };
 
 #endif  // CONTROLLER_H_

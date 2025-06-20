@@ -8,47 +8,47 @@
 #include "melee_weapon.h"
 class Player {
  private:
-  std::string name = "";
-  int health = 100;
-  int MentalHealth = 100;
-  int MaxHealth = 100;
-  int level = 1;
-  int experience = 0;
-  int LevelPoints = 0;
-  int MeleeLevel = 1;
-  int GunLevel = 1;
-  int intelligence = 1;
-  bool isDefend = false;
+  std::string name_ = "";
+  int health_ = 100;
+  int mental_health_ = 100;
+  int max_health_ = 100;
+  int level_ = 1;
+  int experience_ = 0;
+  int level_points_ = 0;
+  int melee_level_ = 1;
+  int gun_level_ = 1;
+  int intelligence_ = 1;
+  bool is_defend_ = false;
 
  public:
-  MeleeWeapon CurrentMelee;
-  GunWeapon CurrentGun;
-  Inventory inventory;
+  MeleeWeapon current_melee_;
+  GunWeapon current_gun_;
+  Inventory inventory_;
   Player(MeleeWeapon& melee, GunWeapon& gun);
   // Armor CurrentArmor;
   void TakeDamage(int damage);
   bool IsAlive() const;
   // bool IsDefending() const { return isDefend; }
-  void SetDefending() { isDefend = true; }
-  void StopDefending() { isDefend = false; }
+  void SetDefending() { is_defend_ = true; }
+  void StopDefending() { is_defend_ = false; }
   void GainExperience(int amount);
-  int GetHealth() const { return health; }
-  int GetMaxHealth() const { return MaxHealth; }
-  int GetMentalHealth() const { return MentalHealth; }
-  int GetLevel() const { return level; }
-  int GetLevelPoints() const { return LevelPoints; }
-  void SetLevelPoints(int amount) { LevelPoints = amount; }
-  int GetExperience() const { return experience; }
-  std::string GetPlayerName() const { return name; }
-  void SetPlayerName(const std::string& NewName) { name = NewName; }
-  int GetMeleeLevel() const { return MeleeLevel; }
-  int GetGunLevel() const { return GunLevel; }
-  int GetIntelligence() const { return intelligence; }
-  void MeleeLevelUp() { ++MeleeLevel; }
-  void GunLevelUp() { ++GunLevel; }
-  void IntelligenceUp() { ++intelligence; }
-  void MaxHealthUp() { MaxHealth += 20; }
-  void Heal(int amount) { health += amount; }
+  int GetHealth() const { return health_; }
+  int GetMaxHealth() const { return max_health_; }
+  int GetMentalHealth() const { return mental_health_; }
+  int GetLevel() const { return level_; }
+  int GetLevelPoints() const { return level_points_; }
+  void SetLevelPoints(int amount) { level_points_ = amount; }
+  int GetExperience() const { return experience_; }
+  std::string GetPlayerName() const { return name_; }
+  void SetPlayerName(const std::string& new_name) { name_ = new_name; }
+  int GetMeleeLevel() const { return melee_level_; }
+  int GetGunLevel() const { return gun_level_; }
+  int GetIntelligence() const { return intelligence_; }
+  void MeleeLevelUp() { ++melee_level_; }
+  void GunLevelUp() { ++gun_level_; }
+  void IntelligenceUp() { ++intelligence_; }
+  void MaxHealthUp() { max_health_ += 20; }
+  void Heal(int amount) { health_ += amount; }
 };
 
 #endif  // PLAYER_H_

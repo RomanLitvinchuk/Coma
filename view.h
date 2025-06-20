@@ -24,7 +24,7 @@ class View {
   static void ShowInventoryInCombat(const Player& player);
   static void ShowRoomMenu(const GameState& state);
   static void ShowRoomChooseMenu(const GameState& state,
-                                 const std::vector<Room>& AllRooms);
+                                 const std::vector<Room>& all_rooms);
 };
 
 #endif  // VIEW_H_

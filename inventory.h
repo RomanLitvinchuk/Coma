@@ -8,9 +8,9 @@
 
 class Inventory {
  public:
-  std::vector<Item> items;
-  void AddItem(const std::string& itemID, const std::vector<Item>& allItems);
-  void RemoveItem(const std::string& itemID);
+  std::vector<Item> items_;
+  void AddItem(const std::string& item_id, const std::vector<Item>& all_items);
+  void RemoveItem(const std::string& item_id);
 };
 
 #endif  // INVENTORY_H_

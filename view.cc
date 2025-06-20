@@ -53,8 +53,8 @@ void View::ShowPlayerMenu(const Player& player) {
             << u8"Уровень: " << player.GetLevel() << "\n"
             << u8"Опыта до следующего уровня: " << 100 - player.GetExperience()
             << "\n"
-            << u8"Оружие: " << player.CurrentMelee.GetName() << "\n"
-            << u8"Пистолет: " << player.CurrentGun.GetName() << "\n"
+            << u8"Оружие: " << player.current_melee_.GetName() << "\n"
+            << u8"Пистолет: " << player.current_gun_.GetName() << "\n"
             << u8"[1] Назад\n"
             << u8"[2] Прокачка\n";
 }
@@ -99,17 +99,17 @@ void View::ShowMessage(const std::string& str) {
 void View::ShowInventoryInCombat(const Player& player) {
   std::cout << u8"\n===============ПРЕДМЕТЫ===============\n"
             << u8"[0] Назад\n";
-  for (int i = 1; i <= player.inventory.items.size(); ++i) {
-    std::cout << u8"[" << i << u8"] " << player.inventory.items[i - 1].GetName()
-              << " " << player.inventory.items[i - 1].GetHealAmount() << "\n";
+  for (int i = 1; i <= player.inventory_.items_.size(); ++i) {
+    std::cout << u8"[" << i << u8"] " << player.inventory_.items_[i - 1].GetName()
+              << " " << player.inventory_.items_[i - 1].GetHealAmount() << "\n";
   }
   std::cout << u8"======================================\n";
 }
 
 void View::ShowRoomMenu(const GameState& state) {
-  std::cout << u8"===============" << state.currentRoom.name
+  std::cout << u8"===============" << state.current_room_.name_
             << u8"===============\n"
-            << state.currentRoom.description << "\n"
+            << state.current_room_.description_ << "\n"
             << u8"[1] Назад\n"
             << u8"[2] Исследовать\n"
             << u8"[3] Перейти в другие комнаты\n"
@@ -117,13 +117,13 @@ void View::ShowRoomMenu(const GameState& state) {
 }
 
 void View::ShowRoomChooseMenu(const GameState& state,
-                              const std::vector<Room>& AllRooms) {
+                              const std::vector<Room>& all_rooms) {
   std::cout << u8"======================================\n" << u8"[0] Назад\n";
-  if (!state.currentRoom.connectedRooms.empty()) {
-    for (int i = 1; i <= state.currentRoom.connectedRooms.size(); ++i) {
+  if (!state.current_room_.connected_rooms_.empty()) {
+    for (int i = 1; i <= state.current_room_.connected_rooms_.size(); ++i) {
       std::cout << u8"[" << i << u8"] "
-                << GetRoomNameById(state.currentRoom.connectedRooms[i - 1],
-                                   AllRooms)
+                << GetRoomNameById(state.current_room_.connected_rooms_[i - 1],
+                                   all_rooms)
                 << "\n";
     }
   }

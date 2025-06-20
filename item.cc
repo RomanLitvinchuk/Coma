@@ -17,8 +17,8 @@ std::vector<Item> LoadAllItems(const std::string& filename) {
   }
 
   std::string line;
-  std::unordered_map<std::string, std::string> currentItemData;
-  int currentId = -1;
+  std::unordered_map<std::string, std::string> current_item_data;
+  int current_id = -1;
 
   while (std::getline(file, line)) {
     // Пропускаем комментарии и пустые строки
@@ -26,40 +26,40 @@ std::vector<Item> LoadAllItems(const std::string& filename) {
 
     if (line[0] == '[' && line.back() == ']') {
       // Если уже есть данные о предыдущем предмете, сохраняем их
-      if (currentId != -1 && !currentItemData.empty()) {
+      if (current_id != -1 && !current_item_data.empty()) {
         try {
-          items.emplace_back(std::to_string(currentId), currentItemData["name"],
-                             std::stoi(currentItemData["healAmount"]));
+          items.emplace_back(std::to_string(current_id), current_item_data["name"],
+                             std::stoi(current_item_data["healAmount"]));
         } catch (const std::exception& e) {
           View::ShowMessage(u8"Failed to parsing item data");
         }
 
-        currentItemData.clear();
+        current_item_data.clear();
       }
 
       // Получаем новый ID
       try {
-        currentId = std::stoi(line.substr(1, line.size() - 2));
+        current_id = std::stoi(line.substr(1, line.size() - 2));
       } catch (const std::exception& e) {
         View::ShowMessage(u8"Invalid ID format");
-        currentId = -1;
+        current_id = -1;
       }
     } else {
       // Парсим параметры вида key=value
-      size_t delimiterPos = line.find('=');
-      if (delimiterPos != std::string::npos) {
-        std::string key = line.substr(0, delimiterPos);
-        std::string value = line.substr(delimiterPos + 1);
-        currentItemData[key] = value;
+      size_t delimeter_pos = line.find('=');
+      if (delimeter_pos != std::string::npos) {
+        std::string key = line.substr(0, delimeter_pos);
+        std::string value = line.substr(delimeter_pos + 1);
+        current_item_data[key] = value;
       }
     }
   }
 
   // Добавляем последний предмет
-  if (currentId != -1 && !currentItemData.empty()) {
+  if (current_id != -1 && !current_item_data.empty()) {
     try {
-      items.emplace_back(std::to_string(currentId), currentItemData["name"],
-                         std::stoi(currentItemData["healAmount"]));
+      items.emplace_back(std::to_string(current_id), current_item_data["name"],
+                         std::stoi(current_item_data["healAmount"]));
     } catch (const std::exception& e) {
       View::ShowMessage(u8"Failed to parsing item data");
     }
@@ -68,13 +68,13 @@ std::vector<Item> LoadAllItems(const std::string& filename) {
   return items;
 }
 
-Item ItemFactory(const std::vector<Item>& allItems, const std::string& itemId) {
+Item ItemFactory(const std::vector<Item>& all_items, const std::string& item_id) {
   Item item("", "", 0);
   bool found = false;
 
   // Ищем шаблон предмета с нужным ID
-  for (const auto& templ : allItems) {
-    if (templ.GetID() == itemId) {
+  for (const auto& templ : all_items) {
+    if (templ.GetID() == item_id) {
       item = templ;
       return item;
     }

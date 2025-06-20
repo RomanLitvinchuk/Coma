@@ -8,19 +8,19 @@
 
 class CombatSystem {
  private:
-  Player& player;
-  std::vector<Enemy> enemies;
-  int experience;
+  Player& player_;
+  std::vector<Enemy> enemies_;
+  int experience_;
 
  public:
   enum CombatState { PLAYER_WIN, ENEMY_WIN, CONTINUE };
   // CombatState CurrentState = CombatState::CONTINUE;
   CombatSystem(Player& player, std::vector<Enemy> enemies)
-      : player(player), enemies(enemies) {}
+      : player_(player), enemies_(enemies) {}
   static void PlayerAttack(Enemy& enemy, Player& player);
   static void EnemyTurn(Player& player, std::vector<Enemy>& enemies);
-  void SetExperience(int amount) { experience = amount; }
-  int GetExperience() const { return experience; }
+  void SetExperience(int amount) { experience_ = amount; }
+  int GetExperience() const { return experience_; }
 };
 
 #endif  // COMBAT_SYSTEM_H_

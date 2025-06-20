@@ -5,25 +5,25 @@
 #include "view.h"
 
 Player::Player(MeleeWeapon& melee, GunWeapon& gun)
-    : CurrentMelee(melee), CurrentGun(gun) {}
+    : current_melee_(melee), current_gun_(gun) {}
 
-bool Player::IsAlive() const { return (health > 0 and MentalHealth > 0); }
+bool Player::IsAlive() const { return (health_ > 0 and mental_health_ > 0); }
 void Player::TakeDamage(int damage) {
-  if (!isDefend) {
-    health -= damage;
+  if (!is_defend_) {
+    health_ -= damage;
   } else {
-    health -= damage / 2;
+    health_ -= damage / 2;
   }
 }
 
 void Player::GainExperience(int amount) {
-  experience += amount;
+  experience_ += amount;
   std::cout << u8"Вы получили " << amount << " опыта!\n";
-  while (experience >= 100) {
-    ++level;
-    std::cout << u8"Вы достигли уровня " << level << "!\n";
-    ++LevelPoints;
-    health = MaxHealth;
-    experience -= 100;
+  while (experience_ >= 100) {
+    ++level_;
+    std::cout << u8"Вы достигли уровня " << level_ << "!\n";
+    ++level_points_;
+    health_ = max_health_;
+    experience_ -= 100;
   }
 }

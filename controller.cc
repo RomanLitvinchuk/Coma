@@ -8,7 +8,7 @@
 void Controller::HandleMainMenu(int choice) {
   switch (choice) {
     case 1:  // Новая игра
-      state->currentState = States::GAME_MENU;
+      state_->current_state_ = States::kGameMenu;
       View::ShowMessage(u8"Новая игра начата!");
       break;
     // case 2: Сохранение
@@ -25,14 +25,14 @@ void Controller::HandleMainMenu(int choice) {
 void Controller::HandleGameMenu(int choice) {
   switch (choice) {
     case 1:  // Комнаты
-      state->currentState = States::ROOM_MENU;
+      state_->current_state_ = States::kRoomMenu;
       break;
     case 2:  // Игрок
-      state->currentState = States::PLAYER_MENU;
+      state_->current_state_ = States::kPlayerMenu;
       break;
     // case 3: Сохранение
     case 4:
-      state->currentState = States::MAIN_MENU;
+      state_->current_state_ = States::kMainMenu;
       break;
     default:
       std::cin.ignore();
@@ -43,10 +43,10 @@ void Controller::HandleGameMenu(int choice) {
 void Controller::HandlePlayerMenu(int choice) {
   switch (choice) {
     case 1:
-      state->currentState = States::GAME_MENU;
+      state_->current_state_ = States::kGameMenu;
       break;
     case 2:
-      state->currentState = States::LEVEL_MENU;
+      state_->current_state_ = States::kLevelMenu;
       break;
     default:
       std::cin.ignore();
@@ -57,7 +57,7 @@ void Controller::HandlePlayerMenu(int choice) {
 void Controller::HandleLevelMenu(int choice, Player& player) {
   switch (choice) {
     case 1:
-      state->currentState = States::PLAYER_MENU;
+      state_->current_state_ = States::kPlayerMenu;
       break;
     case 2:
       if (player.GetLevelPoints() > 0) {
@@ -105,7 +105,7 @@ CombatSystem::CombatState Controller::HandleCombatMenu(
     int choice, Player& player, std::vector<Enemy>& enemies) {
   switch (choice) {
     case 1:
-      state->currentState = States::CHOOSE_ENEMIES_MENU;
+      state_->current_state_ = States::kChooseEnemiesMenu;
       break;
     case 2:
       player.SetDefending();
@@ -118,10 +118,10 @@ CombatSystem::CombatState Controller::HandleCombatMenu(
       }
       break;
     case 3:
-      state->currentState = States::INVENTORY_IN_COMBAT_MENU;
+      state_->current_state_ = States::kInventoryInCombatMenu;
       break;
     case 4:
-      state->currentState = States::ENEMY_LIST_MENU;
+      state_->current_state_ = States::kEnemyListMenu;
       return CombatSystem::CONTINUE;
       break;
     default:
@@ -135,14 +135,14 @@ CombatSystem::CombatState Controller::HandleChooseEnemyMenu(
     int choice, Player& player, std::vector<Enemy>& enemies) {
   switch (choice) {
     case 0:
-      state->currentState = States::COMBAT_MENU;
+      state_->current_state_ = States::kCombatMenu;
       return CombatSystem::CONTINUE;
       break;
     default:
       if (choice <= enemies.size()) {
         CombatSystem::PlayerAttack(enemies[choice - 1], player);
         CombatSystem::EnemyTurn(player, enemies);
-        state->currentState = States::COMBAT_MENU;
+        state_->current_state_ = States::kCombatMenu;
         if (!player.IsAlive()) {
           return CombatSystem::ENEMY_WIN;
         }
@@ -157,7 +157,7 @@ CombatSystem::CombatState Controller::HandleChooseEnemyMenu(
           return CombatSystem::PLAYER_WIN;
         } else {
           return CombatSystem::CONTINUE;
-          state->currentState = States::COMBAT_MENU;
+          state_->current_state_ = States::kCombatMenu;
         }
       } else {
         std::cin.ignore();
@@ -171,7 +171,7 @@ CombatSystem::CombatState Controller::HandleChooseEnemyMenu(
 void Controller::HandleEnemyListMenu(int choice) {
   switch (choice) {
     case 0:
-      state->currentState = States::COMBAT_MENU;
+      state_->current_state_ = States::kCombatMenu;
       break;
     default:
       std::cin.ignore();
@@ -182,21 +182,21 @@ void Controller::HandleEnemyListMenu(int choice) {
 void Controller::HandleInventoryInCombatMenu(int choice, Player& player) {
   switch (choice) {
     case 0:
-      state->currentState = States::COMBAT_MENU;
+      state_->current_state_ = States::kCombatMenu;
       break;
     default:
-      if (choice <= player.inventory.items.size()) {
+      if (choice <= player.inventory_.items_.size()) {
         if (player.GetHealth() < player.GetMaxHealth()) {
-          player.Heal(player.inventory.items[choice - 1].GetHealAmount());
+          player.Heal(player.inventory_.items_[choice - 1].GetHealAmount());
           View::ShowMessage(
               u8"Вы использовали " +
-              player.inventory.items[choice - 1].GetName() +
+              player.inventory_.items_[choice - 1].GetName() +
               u8", вы восстановили " +
               std::to_string(
-                  player.inventory.items[choice - 1].GetHealAmount()));
+                  player.inventory_.items_[choice - 1].GetHealAmount()));
           std::cin.ignore();
-          player.inventory.RemoveItem(
-              player.inventory.items[choice - 1].GetID());
+          player.inventory_.RemoveItem(
+              player.inventory_.items_[choice - 1].GetID());
         } else {
           View::ShowMessage(u8"У вас уже полное здоровье");
         }
@@ -208,35 +208,35 @@ void Controller::HandleInventoryInCombatMenu(int choice, Player& player) {
   }
 }
 
-void Controller::HandleRoomMenu(int choice, std::vector<Enemy>& allEnemies) {
+void Controller::HandleRoomMenu(int choice, std::vector<Enemy>& all_enemies) {
   switch (choice) {
     case 1:
-      state->currentState = States::GAME_MENU;
+      state_->current_state_ = States::kGameMenu;
       break;
     case 2:
-      if (!state->currentRoom.IsChecked) {
+      if (!state_->current_room_.is_checked_) {
         std::cin.ignore();
-        switch (state->currentRoom.type) {
-          case RoomType::DEFAULT:
+        switch (state_->current_room_.type_) {
+          case RoomType::kDefault:
             View::ShowMessage(
                 u8"Вы исследуете комнату, но не находите ничего интересного");
             break;
-          case RoomType::ENEMIES:
-            state->enemies.clear();
-            state->enemies =
-                EnemyFactory(allEnemies, state->currentRoom.enemyIds);
+          case RoomType::kEnemies:
+            state_->enemies_.clear();
+            state_->enemies_ =
+                EnemyFactory(all_enemies, state_->current_room_.enemy_ids_);
             View::ShowMessage(u8"На вас нападает противник!");
-            state->currentState = States::COMBAT_MENU;
+            state_->current_state_ = States::kCombatMenu;
             break;
         }
-        state->currentRoom.IsChecked = true;
+        state_->current_room_.is_checked_ = true;
       } else {
         std::cin.ignore();
         View::ShowMessage(u8"В этой комнате больше нет ничего интересного");
       }
       break;
     case 3:
-      state->currentState = States::CHOOSE_ROOM_MENU;
+      state_->current_state_ = States::kChooseRoomMenu;
       break;
     default:
       std::cin.ignore();
@@ -244,16 +244,16 @@ void Controller::HandleRoomMenu(int choice, std::vector<Enemy>& allEnemies) {
   }
 }
 
-void Controller::HandleRoomChooseMenu(int choice, std::vector<Room>& AllRooms) {
+void Controller::HandleRoomChooseMenu(int choice, std::vector<Room>& all_rooms) {
   switch (choice) {
     case 0:
-      state->currentState = States::ROOM_MENU;
+      state_->current_state_ = States::kRoomMenu;
       break;
     default:
-      if (choice <= state->currentRoom.connectedRooms.size()) {
-        state->currentRoom = RoomFactory(
-            state->currentRoom.connectedRooms[choice - 1], AllRooms);
-        state->currentState = States::ROOM_MENU;
+      if (choice <= state_->current_room_.connected_rooms_.size()) {
+        state_->current_room_ = RoomFactory(
+            state_->current_room_.connected_rooms_[choice - 1], all_rooms);
+        state_->current_state_ = States::kRoomMenu;
         break;
       } else {
         std::cin.ignore();

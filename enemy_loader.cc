@@ -18,8 +18,8 @@ std::vector<Enemy> LoadAllEnemies(const std::string& filename) {
   }
 
   std::string line;
-  std::unordered_map<std::string, std::string> currentEnemyData;
-  int currentId = -1;
+  std::unordered_map<std::string, std::string> current_enemy_data;
+  int current_id = -1;
 
   while (std::getline(file, line)) {
     // Пропускаем комментарии и пустые строки
@@ -27,45 +27,45 @@ std::vector<Enemy> LoadAllEnemies(const std::string& filename) {
 
     if (line[0] == '[' && line.back() == ']') {
       // Если уже есть данные о предыдущем враге, сохраняем их
-      if (currentId != -1 && !currentEnemyData.empty()) {
+      if (current_id != -1 && !current_enemy_data.empty()) {
         try {
-          enemies.emplace_back(std::to_string(currentId),
-                               currentEnemyData["name"],
-                               std::stoi(currentEnemyData["health"]),
-                               std::stoi(currentEnemyData["attack"]),
-                               std::stoi(currentEnemyData["experience"]));
+          enemies.emplace_back(std::to_string(current_id),
+                               current_enemy_data["name"],
+                               std::stoi(current_enemy_data["health"]),
+                               std::stoi(current_enemy_data["attack"]),
+                               std::stoi(current_enemy_data["experience"]));
         } catch (const std::exception& e) {
           View::ShowMessage(u8"Failed to parsing enemy data");
         }
 
-        currentEnemyData.clear();
+        current_enemy_data.clear();
       }
 
       // Получаем новый ID
       try {
-        currentId = std::stoi(line.substr(1, line.size() - 2));
+        current_id = std::stoi(line.substr(1, line.size() - 2));
       } catch (const std::exception& e) {
         View::ShowMessage(u8"Invalid ID format");
-        currentId = -1;
+        current_id = -1;
       }
     } else {
       // Парсим параметры вида key=value
-      size_t delimiterPos = line.find('=');
-      if (delimiterPos != std::string::npos) {
-        std::string key = line.substr(0, delimiterPos);
-        std::string value = line.substr(delimiterPos + 1);
-        currentEnemyData[key] = value;
+      size_t delimeter_pos = line.find('=');
+      if (delimeter_pos != std::string::npos) {
+        std::string key = line.substr(0, delimeter_pos);
+        std::string value = line.substr(delimeter_pos + 1);
+        current_enemy_data[key] = value;
       }
     }
   }
 
   // Добавляем последнего врага
-  if (currentId != -1 && !currentEnemyData.empty()) {
+  if (current_id != -1 && !current_enemy_data.empty()) {
     try {
-      enemies.emplace_back(std::to_string(currentId), currentEnemyData["name"],
-                           std::stoi(currentEnemyData["health"]),
-                           std::stoi(currentEnemyData["attack"]),
-                           std::stoi(currentEnemyData["experience"]));
+      enemies.emplace_back(std::to_string(current_id), current_enemy_data["name"],
+                           std::stoi(current_enemy_data["health"]),
+                           std::stoi(current_enemy_data["attack"]),
+                           std::stoi(current_enemy_data["experience"]));
     } catch (const std::exception& e) {
       View::ShowMessage(u8"Failed to parsing enemy data");
     }

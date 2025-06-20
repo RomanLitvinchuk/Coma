@@ -6,7 +6,7 @@
 #include "gun.h"
 #include "view.h"
 
-GunWeapon GunLoader(const std::string& filename, const std::string& weaponId) {
+GunWeapon GunLoader(const std::string& filename, const std::string& weapon_id) {
   std::ifstream file(filename);
 
   if (!file.is_open()) {
@@ -15,47 +15,47 @@ GunWeapon GunLoader(const std::string& filename, const std::string& weaponId) {
   }
 
   std::string line;
-  std::unordered_map<std::string, std::string> weaponData;
-  std::string currentId;
+  std::unordered_map<std::string, std::string> weapon_data;
+  std::string current_id;
   bool found = false;
 
   while (std::getline(file, line)) {
     if (line.empty()) {
       // ѕровер€ем, нашли ли нужное оружие перед пустой строкой
-      if (found && currentId == weaponId && !weaponData.empty()) {
+      if (found && current_id == weapon_id && !weapon_data.empty()) {
         try {
-          return GunWeapon(currentId, weaponData["name"],
-                           std::stoi(weaponData["damage"]),
-                           std::stoi(weaponData["accuracy"]),
-                           std::stoi(weaponData["cooldown"]));
+          return GunWeapon(current_id, weapon_data["name"],
+                           std::stoi(weapon_data["damage"]),
+                           std::stoi(weapon_data["accuracy"]),
+                           std::stoi(weapon_data["cooldown"]));
         } catch (const std::exception& e) {
           View::ShowMessage(u8"Failed to parsing gun data");
           return GunWeapon("", "", 0, 0, 0);
         }
       }
-      weaponData.clear();
+      weapon_data.clear();
       continue;
     }
 
     if (line[0] == '[' && line.back() == ']') {
-      currentId = line.substr(1, line.size() - 2);
-      found = (currentId == weaponId);
+      current_id = line.substr(1, line.size() - 2);
+      found = (current_id == weapon_id);
     } else if (found) {
-      size_t delimiterPos = line.find('=');
-      if (delimiterPos != std::string::npos) {
-        std::string key = line.substr(0, delimiterPos);
-        std::string value = line.substr(delimiterPos + 1);
-        weaponData[key] = value;
+      size_t delimeter_pos = line.find('=');
+      if (delimeter_pos != std::string::npos) {
+        std::string key = line.substr(0, delimeter_pos);
+        std::string value = line.substr(delimeter_pos + 1);
+        weapon_data[key] = value;
       }
     }
   }
 
   // ѕровер€ем последнее оружие в файле (если нет пустой строки в конце)
-  if (found && currentId == weaponId && !weaponData.empty()) {
+  if (found && current_id == weapon_id && !weapon_data.empty()) {
     try {
       return GunWeapon(
-          currentId, weaponData["name"], std::stoi(weaponData["damage"]),
-          std::stoi(weaponData["accuracy"]), std::stoi(weaponData["cooldown"]));
+          current_id, weapon_data["name"], std::stoi(weapon_data["damage"]),
+          std::stoi(weapon_data["accuracy"]), std::stoi(weapon_data["cooldown"]));
     } catch (const std::exception& e) {
       View::ShowMessage(u8"Error to parsing gun data");
     }

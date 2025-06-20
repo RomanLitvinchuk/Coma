@@ -7,16 +7,16 @@
 #include "enemy.h"
 
 inline std::vector<Enemy> EnemyFactory(
-    const std::vector<Enemy> allEnemies,
-    const std::vector<std::string>& enemyIds) {
+    const std::vector<Enemy> all_enemies,
+    const std::vector<std::string>& enemy_ids) {
   std::vector<Enemy> enemies;
 
-  for (const auto& enemyId : enemyIds) {
+  for (const auto& enemy_id : enemy_ids) {
     bool found = false;
 
     // »щем шаблон врага с нужным ID
-    for (const auto& templ : allEnemies) {
-      if (templ.GetID() == enemyId) {
+    for (const auto& templ : all_enemies) {
+      if (templ.GetID() == enemy_id) {
         enemies.push_back(templ);
         found = true;
         break;

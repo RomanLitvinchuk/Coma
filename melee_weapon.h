@@ -5,21 +5,21 @@
 
 class MeleeWeapon {
  private:
-  std::string id;
-  std::string name;
-  int damage;
-  int accuracy;
+  std::string id_;
+  std::string name_;
+  int damage_;
+  int accuracy_;
 
  public:
   MeleeWeapon(std::string id, const std::string name, int damage, int accuracy)
-      : id(id), name(name), damage(damage), accuracy(accuracy) {}
-  std::string GetID() const { return id; }
-  std::string GetName() const { return name; }
-  int GetDamage() const { return damage; }
-  int GetAccuracy() const { return accuracy; }
+      : id_(id), name_(name), damage_(damage), accuracy_(accuracy) {}
+  std::string GetID() const { return id_; }
+  std::string GetName() const { return name_; }
+  int GetDamage() const { return damage_; }
+  int GetAccuracy() const { return accuracy_; }
 };
 
 MeleeWeapon MeleeLoader(const std::string& filename,
-                        const std::string& IdForMelee);
+                        const std::string& id_for_melee);
 
 #endif  // MELEE_WEAPON_H_
