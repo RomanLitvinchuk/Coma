@@ -8,7 +8,6 @@
 #include "melee_weapon.h"
 class Player {
  private:
-  std::string name_ = "";
   int health_ = 100;
   int mental_health_ = 100;
   int max_health_ = 100;
@@ -39,8 +38,6 @@ class Player {
   int GetLevelPoints() const { return level_points_; }
   void SetLevelPoints(int amount) { level_points_ = amount; }
   int GetExperience() const { return experience_; }
-  std::string GetPlayerName() const { return name_; }
-  void SetPlayerName(const std::string& new_name) { name_ = new_name; }
   int GetMeleeLevel() const { return melee_level_; }
   int GetGunLevel() const { return gun_level_; }
   int GetIntelligence() const { return intelligence_; }
