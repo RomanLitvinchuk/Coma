@@ -13,12 +13,13 @@ class CombatSystem {
   int experience_;
 
  public:
-  enum CombatState { PLAYER_WIN, ENEMY_WIN, CONTINUE };
+  enum CombatState { kPlayerWin, kEnemyWin, kContinue };
   // CombatState CurrentState = CombatState::CONTINUE;
   CombatSystem(Player& player, std::vector<Enemy> enemies)
       : player_(player), enemies_(enemies) {}
   static void PlayerAttack(Enemy& enemy, Player& player);
   static void EnemyTurn(Player& player, std::vector<Enemy>& enemies);
+  static int CalculateMeleeDamage(const Player& player);
   void SetExperience(int amount) { experience_ = amount; }
   int GetExperience() const { return experience_; }
 };

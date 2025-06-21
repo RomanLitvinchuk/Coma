@@ -39,47 +39,50 @@ void View::ShowCombatMenu(const Player& player) {
 }
 
 void View::ShowEnemyListInCombat(const std::vector<Enemy>& enemies) {
-  std::cout << u8"========================\n" << u8"[0] Назад\n";
+  std::cout << u8"╔═══════════════════════════╗\n" << u8"║ › [0] Назад\n";
 
   for (int i = 1; i <= enemies.size(); ++i) {
-    std::cout << u8"[" << i << "]" << enemies[i - 1].GetName() << " "
+    std::cout << u8"║ › [" << i << "]" << enemies[i - 1].GetName() << " "
               << enemies[i - 1].GetHealth() << "\n";
   }
-  std::cout << u8"========================\n";
+  std::cout << u8"╚═══════════════════════════╝\n";
 }
 
 void View::ShowPlayerMenu(const Player& player) {
   std::cout << u8"╔══════════════PLAYER═════════════╗\n"
             << u8"║ Здоровье: " << player.GetHealth()
-            << u8"                   ║\n"
+            << u8"                   \n"
             << u8"║ Рассудок: " << player.GetMentalHealth()
-            << u8"                   ║\n"
+            << u8"                   \n"
             << u8"║ Уровень: " << player.GetLevel()
-            << u8"                      ║\n"
+            << u8"                      \n"
             << u8"║ Опыта до следующего уровня: "
-            << 100 - player.GetExperience() << u8" ║\n"
+            << 100 - player.GetExperience() << u8" \n"
             << u8"║ Оружие: " << player.current_melee_.GetName()
-            << u8"                   ║\n"
+            << u8"                   \n"
             << u8"║ Пистолет: " << player.current_gun_.GetName()
-            << u8"                    ║\n"
+            << u8"                    \n"
             << u8"║═════════════════════════════════║\n"
             << u8"║ › [1] Назад                     ║\n"
             << u8"║ › [2] Прокачка                  ║\n"
+            << u8"║ › [3] Поменять оружие (ближнее) ║\n"  
+            << u8"║ › [4] Поменять оружие (дальнее) ║\n"
+            << u8"║ › [5] Предметы                  ║\n"
             << u8"╚═════════════════════════════════╝\n";
 }
 
 void View::ShowLevelMenu(const Player& player) {
   std::cout << u8"╔══════════════ПРОКАЧКА══════════════╗\n"
             << u8"║ Доступные очки характеристик: " << player.GetLevelPoints()
-            << u8"    ║\n"
+            << u8"    \n"
             << u8"║ Максимальное здоровье: " << player.GetMaxHealth()
-            << u8"         ║\n"
+            << u8"         \n"
             << u8"║ Мастерство ближнего боя: " << player.GetMeleeLevel()
-            << u8"         ║\n"
+            << u8"         \n"
             << u8"║ Мастерство дальнего боя: " << player.GetGunLevel()
-            << u8"         ║\n"
+            << u8"         \n"
             << u8"║ Интеллект: " << player.GetIntelligence()
-            << u8"                       ║\n"
+            << u8"                       \n"
             << u8"║════════════════════════════════════║\n"
             << u8"║ › [1] Назад                        ║\n"
             << u8"║ › [2] Прокачать макс. здоровье     ║\n"
@@ -112,7 +115,7 @@ void View::ShowMessage(const std::string& str) {
   std::cout << u8"\n" << str << "\n";
 }
 
-void View::ShowInventoryInCombat(const Player& player) {
+void View::ShowInventoryItemsMenu(const Player& player) {
   std::cout << u8"╔══════════════ПРЕДМЕТЫ══════════════╗\n";
   for (int i = 1; i <= player.inventory_.items_.size(); ++i) {
     std::cout << u8"║ › [" << i << u8"] "
@@ -121,7 +124,7 @@ void View::ShowInventoryInCombat(const Player& player) {
   }
   std::cout << u8"║════════════════════════════════════║\n"
             << u8"║ › [0] Назад                        ║\n"
-            << u8"╚════════════════════════════════════╝";
+            << u8"╚════════════════════════════════════╝\n";
 }
 
 void View::ShowRoomMenu(const GameState& state) {
@@ -148,4 +151,17 @@ void View::ShowRoomChooseMenu(const GameState& state,
   std::cout << u8"║═══════════════════════════════════║\n"
             << u8"║ › [0] Назад                       ║\n"
             << u8"╚═══════════════════════════════════╝\n";
+}
+
+void View::ShowInventoryMeleeMenu(const Player& player) 
+{
+    std::cout << u8"╔═════════════════════════════════╗\n";
+    for (int i = 1; i <= player.inventory_.melees_.size(); ++i) 
+    {
+        std::cout << u8"║ › [" << i << u8"] "
+            << player.inventory_.melees_[i - 1].GetName() << "\n";
+    }
+	std::cout << u8"║════════════════════════════════════║\n"
+		      << u8"║ › [0] Назад                        ║\n"
+		      << u8"╚════════════════════════════════════╝\n";
 }

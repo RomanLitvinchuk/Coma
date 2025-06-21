@@ -24,5 +24,5 @@ class Enemy {
 };
 
 std::vector<Enemy> LoadAllEnemies(const std::string& filename);
-
+std::vector<Enemy> EnemyFactory(const std::vector<Enemy>& all_enemies, const std::vector<std::string>& enemy_ids);
 #endif  // ENEMY_H_

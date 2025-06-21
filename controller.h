@@ -24,6 +24,8 @@ class Controller {
   CombatSystem::CombatState HandleChooseEnemyMenu(int choice, Player& player,
                                                   std::vector<Enemy>& enemies);
   void HandleInventoryInCombatMenu(int choice, Player& player);
+  void HandleInventoryMeleeMenu(int choice, Player& player);
+  void HandleInventoryItemsMenu(int choice, Player& player);
   void HandleRoomMenu(int choice, std::vector<Enemy>& all_enemies);
   void HandleRoomChooseMenu(int choice, std::vector<Room>& all_rooms);
 };

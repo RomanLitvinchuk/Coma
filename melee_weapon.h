@@ -19,7 +19,7 @@ class MeleeWeapon {
   int GetAccuracy() const { return accuracy_; }
 };
 
-MeleeWeapon MeleeLoader(const std::string& filename,
-                        const std::string& id_for_melee);
+std::vector<MeleeWeapon> LoadAllMelee(const std::string& filename);
+MeleeWeapon MeleeFactory(const std::string& melee_id, const std::vector<MeleeWeapon> all_melee);
 
 #endif  // MELEE_WEAPON_H_

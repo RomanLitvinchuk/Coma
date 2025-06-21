@@ -80,9 +80,6 @@
     <ClInclude Include="gun.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="enemy_factory.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="item.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>

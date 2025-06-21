@@ -1,66 +1,77 @@
+#include <algorithm>
 #include <fstream>
-#include <optional>
+#include <sstream>
 #include <string>
 #include <unordered_map>
 
 #include "melee_weapon.h"
 #include "view.h"
 
-MeleeWeapon MeleeLoader(const std::string& filename,
-                        const std::string& weapon_id) {
+std::vector<MeleeWeapon> LoadAllMelee(const std::string& filename) {
+  std::vector<MeleeWeapon> weapons;
   std::ifstream file(filename);
 
   if (!file.is_open()) {
     View::ShowMessage(u8"Failed to load file melee.txt");
-    return MeleeWeapon("", "", 0, 0);
+    return weapons;
   }
 
   std::string line;
-  std::unordered_map<std::string, std::string> weapon_data;
+  std::unordered_map<std::string, std::string> current_weapon_data;
   std::string current_id;
-  bool found = false;
 
   while (std::getline(file, line)) {
-    if (line.empty()) {
-      // Проверяем, нашли ли нужное оружие перед пустой строкой
-      if (found && current_id == weapon_id && !weapon_data.empty()) {
-        try {
-          return MeleeWeapon(current_id, weapon_data["name"],
-                             std::stoi(weapon_data["damage"]),
-                             std::stoi(weapon_data["accuracy"]));
-        } catch (const std::exception& e) {
-          View::ShowMessage(u8"Failed to parsing melee data");
-          return MeleeWeapon("", "", 0, 0);
-        }
-      }
-      weapon_data.clear();
-      continue;
-    }
+    // Пропускаем комментарии и пустые строки
+    if (line.empty() || line.find("//") == 0) continue;
 
     if (line[0] == '[' && line.back() == ']') {
+      // Если уже есть данные о предыдущем оружии, сохраняем их
+      if (!current_id.empty() && !current_weapon_data.empty()) {
+        try {
+          weapons.emplace_back(current_id, current_weapon_data["name"],
+                               std::stoi(current_weapon_data["damage"]),
+                               std::stoi(current_weapon_data["accuracy"]));
+        } catch (const std::exception& e) {
+          View::ShowMessage(u8"Failed to parse melee weapon data");
+        }
+
+        current_weapon_data.clear();
+      }
+
+      // Получаем новый ID
       current_id = line.substr(1, line.size() - 2);
-      found = (current_id == weapon_id);
-    } else if (found) {
+    } else {
+      // Парсим параметры вида key=value
       size_t delimeter_pos = line.find('=');
       if (delimeter_pos != std::string::npos) {
         std::string key = line.substr(0, delimeter_pos);
         std::string value = line.substr(delimeter_pos + 1);
-        weapon_data[key] = value;
+        current_weapon_data[key] = value;
       }
     }
   }
 
-  // Проверяем последнее оружие в файле (если нет пустой строки в конце)
-  if (found && current_id == weapon_id && !weapon_data.empty()) {
+  // Добавляем последнее оружие
+  if (!current_id.empty() && !current_weapon_data.empty()) {
     try {
-      return MeleeWeapon(current_id, weapon_data["name"],
-                         std::stoi(weapon_data["damage"]),
-                         std::stoi(weapon_data["accuracy"]));
+      weapons.emplace_back(current_id, current_weapon_data["name"],
+                           std::stoi(current_weapon_data["damage"]),
+                           std::stoi(current_weapon_data["accuracy"]));
     } catch (const std::exception& e) {
-      View::ShowMessage(u8"Error to parsing melee data");
+      View::ShowMessage(u8"Failed to parse melee weapon data");
     }
   }
 
-  View::ShowMessage(u8"Failed to found a melee ID");
-  return MeleeWeapon("", "", 0, 0);
+  return weapons;
+}
+
+
+MeleeWeapon MeleeFactory(const std::string& melee_id, const std::vector<MeleeWeapon> all_melee)
+{
+    for (const auto& templ : all_melee) 
+    {
+        if (templ.GetID() == melee_id) {
+            return templ;
+        }
+    }
 }

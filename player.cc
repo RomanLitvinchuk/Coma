@@ -18,10 +18,10 @@ void Player::TakeDamage(int damage) {
 
 void Player::GainExperience(int amount) {
   experience_ += amount;
-  std::cout << u8"Вы получили " << amount << " опыта!\n";
+  std::cout << u8"Вы получили " << amount << u8" опыта!\n";
   while (experience_ >= 100) {
     ++level_;
-    std::cout << u8"Вы достигли уровня " << level_ << "!\n";
+    std::cout << u8"Вы достигли уровня " << level_ << u8"!\n";
     ++level_points_;
     health_ = max_health_;
     experience_ -= 100;

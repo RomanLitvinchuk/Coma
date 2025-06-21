@@ -14,7 +14,10 @@ enum class States {
   kEnemyListMenu,
   kPlayerMenu,
   kLevelMenu,
+  kInventoryItemsMenu,
   kInventoryInCombatMenu,
+  kInventoryMeleeMenu,
+  kInventoryGunMenu,
   kRoomMenu,
   kChooseRoomMenu
 };

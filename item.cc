@@ -69,14 +69,12 @@ std::vector<Item> LoadAllItems(const std::string& filename) {
 }
 
 Item ItemFactory(const std::vector<Item>& all_items, const std::string& item_id) {
-  Item item("", "", 0);
   bool found = false;
 
   // »щем шаблон предмета с нужным ID
   for (const auto& templ : all_items) {
     if (templ.GetID() == item_id) {
-      item = templ;
-      return item;
+        return templ;
     }
     // if (!found)
   }

@@ -9,21 +9,22 @@ class GunWeapon {
   std::string name_;
   int damage_;
   int accuracy_;
-  int cooldown_;
+  int current_cooldown_;
+  //int max_cooldown;
 
  public:
   GunWeapon(const std::string id, const std::string name, int damage,
-            int accuracy, int cooldown)
+            int accuracy, int cur_cooldown)
       : id_(id),
         name_(name),
         damage_(damage),
         accuracy_(accuracy),
-        cooldown_(cooldown) {}
+        current_cooldown_(cur_cooldown){}
   std::string GetID() const { return id_; }
   std::string GetName() const { return name_; }
   int GetDamage() const { return damage_; }
   int GetAccuracy() const { return accuracy_; }
-  int GetCooldown() const { return cooldown_; }
+  int GetCurrentCooldown() const { return current_cooldown_; }
 };
 
 GunWeapon GunLoader(const std::string& filename, const std::string& gun_id);

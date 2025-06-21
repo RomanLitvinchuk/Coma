@@ -5,7 +5,6 @@
 
 #include "controller.h"
 #include "enemy.h"
-#include "enemy_factory.h"
 #include "gun.h"
 #include "inventory.h"
 #include "item.h"
@@ -20,9 +19,11 @@ int main() {
   SetConsoleCP(CP_UTF8);
   try {
     bool is_running = true;
-    MeleeWeapon example_melee = MeleeLoader("melee.txt", "1");
+    std::vector<MeleeWeapon> all_melee = LoadAllMelee("melee.txt");
+    MeleeWeapon example_melee = MeleeFactory("1", all_melee);
     GunWeapon example_gun = GunLoader("guns.txt", "1");
     Player player(example_melee, example_gun);
+    player.inventory_.AddMelee("1", all_melee);
     std::vector<Enemy> all_enemies = LoadAllEnemies("enemies.txt");
     std::vector<Item> all_items = LoadAllItems("items.txt");
     std::vector<Room> all_rooms = LoadAllRooms("rooms.txt");
@@ -78,7 +79,7 @@ int main() {
               controller.HandleCombatMenu(choice, player, state.enemies_);
 
           switch (result) {
-            case CombatSystem::PLAYER_WIN:
+            case CombatSystem::kPlayerWin:
               for (auto& current_enemy : state.enemies_) {
                 player.GainExperience(current_enemy.GetExperience());
               }
@@ -87,7 +88,7 @@ int main() {
               std::cin.ignore();
               state.current_state_ = States::kGameMenu;
               break;
-            case CombatSystem::ENEMY_WIN:
+            case CombatSystem::kEnemyWin:
               state.enemies_.clear();
               View::ShowMessage(
                   u8"Вы проиграли, возвращение в главное меню...");
@@ -104,7 +105,7 @@ int main() {
           auto result =
               controller.HandleChooseEnemyMenu(choice, player, state.enemies_);
           switch (result) {
-            case CombatSystem::PLAYER_WIN:
+            case CombatSystem::kPlayerWin:
               for (auto& current_enemy : state.enemies_) {
                 player.GainExperience(current_enemy.GetExperience());
               }
@@ -113,7 +114,7 @@ int main() {
               std::cin.ignore();
               state.current_state_ = States::kGameMenu;
               break;
-            case CombatSystem::ENEMY_WIN:
+            case CombatSystem::kEnemyWin:
               View::ShowMessage(
                   u8"Вы проиграли, возвращение в главное меню...");
               std::cin.ignore();
@@ -130,10 +131,24 @@ int main() {
           break;
         }
         case States::kInventoryInCombatMenu: {
-          View::ShowInventoryInCombat(player);
+          View::ShowInventoryItemsMenu(player);
           std::cin >> input;
           int choice = std::stoi(input);
           controller.HandleInventoryInCombatMenu(choice, player);
+          break;
+        }
+        case States::kInventoryItemsMenu: {
+          View::ShowInventoryItemsMenu(player);
+          std::cin >> input;
+          int choice = std::stoi(input);
+          controller.HandleInventoryItemsMenu(choice, player);
+          break;
+        }
+        case States::kInventoryMeleeMenu: {
+          View::ShowInventoryMeleeMenu(player);
+          std::cin >> input;
+          int choice = std::stoi(input);
+          controller.HandleInventoryMeleeMenu(choice, player);
           break;
         }
         case States::kRoomMenu: {

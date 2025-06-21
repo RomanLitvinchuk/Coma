@@ -21,10 +21,11 @@ class View {
   static void ShowEnemyList(const std::vector<Enemy>& enemies);
   static void ShowEnemyListInCombat(const std::vector<Enemy>& enemies);
   static void ShowMeleeStats(const MeleeWeapon& melee);
-  static void ShowInventoryInCombat(const Player& player);
+  static void ShowInventoryItemsMenu(const Player& player);
   static void ShowRoomMenu(const GameState& state);
   static void ShowRoomChooseMenu(const GameState& state,
                                  const std::vector<Room>& all_rooms);
+  static void ShowInventoryMeleeMenu(const Player& player);
 };
 
 #endif  // VIEW_H_

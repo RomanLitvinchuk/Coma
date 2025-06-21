@@ -4,9 +4,9 @@
 #include <vector>
 
 #include "item.h"
-void Inventory::AddItem(const std::string& itemID,
+void Inventory::AddItem(const std::string& item_id,
                         const std::vector<Item>& all_items) {
-  Item new_item = ItemFactory(all_items, itemID);
+  Item new_item = ItemFactory(all_items, item_id);
   items_.push_back(new_item);
 }
 
@@ -16,4 +16,10 @@ void Inventory::RemoveItem(const std::string& item_id) {
                                return item.GetID() == item_id;
                              }),
               items_.end());
+}
+
+void Inventory::AddMelee(const std::string& melee_id, const std::vector<MeleeWeapon> all_melee) 
+{
+    MeleeWeapon new_melee = MeleeFactory(melee_id, all_melee);
+    melees_.push_back(new_melee);
 }
