@@ -27,7 +27,11 @@ class Controller {
   void HandleInventoryMeleeMenu(int choice, Player& player);
   void HandleInventoryGunMenu(int choice, Player& player);
   void HandleInventoryItemsMenu(int choice, Player& player);
-  void HandleRoomMenu(int choice, std::vector<Enemy>& all_enemies);
+  void HandleRoomMenu(int choice, Player& player,
+	  std::vector<Enemy>& all_enemies,
+	  std::vector<MeleeWeapon>& all_melee,
+	  std::vector<GunWeapon>& all_guns,
+	  std::vector<Item> all_items);
   void HandleRoomChooseMenu(int choice, std::vector<Room>& all_rooms);
 };
 

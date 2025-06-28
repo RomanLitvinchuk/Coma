@@ -1,6 +1,7 @@
 ﻿#include <Windows.h>
 
 #include <iostream>
+#include <random>
 #include <string>
 
 #include "controller.h"
@@ -170,7 +171,8 @@ int main() {
           View::ViewRoomMenu(state);
           std::cin >> input;
           int choice = std::stoi(input);
-          controller.HandleRoomMenu(choice, all_enemies);
+          controller.HandleRoomMenu(choice, player, all_enemies, all_melee,
+                                    all_guns, all_items);
           break;
         }
 

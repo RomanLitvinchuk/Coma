@@ -1,6 +1,7 @@
 #include "controller.h"
 
 #include <iostream>
+#include <random>
 
 #include "view.h"
 
@@ -48,14 +49,14 @@ void Controller::HandlePlayerMenu(int choice) {
       state_->current_state_ = States::kLevelMenu;
       break;
     case 3:
-        state_->current_state_ = States::kInventoryMeleeMenu;
-        break;
+      state_->current_state_ = States::kInventoryMeleeMenu;
+      break;
     case 4:
-        state_->current_state_ = States::kInventoryGunMenu;
-        break;
+      state_->current_state_ = States::kInventoryGunMenu;
+      break;
     case 5:
-        state_->current_state_ = States::kInventoryItemsMenu;
-        break;
+      state_->current_state_ = States::kInventoryItemsMenu;
+      break;
     default:
       std::cin.ignore();
       View::ViewMessage(u8"Некорректный ввод!");
@@ -195,7 +196,8 @@ void Controller::HandleInventoryInCombatMenu(int choice, Player& player) {
     default:
       if (choice <= player.inventory_.items_.size()) {
         if (player.GetHealth() < player.GetMaxHealth()) {
-          player.Heal(player.inventory_.items_[choice - 1].GetHealAmount(), player.inventory_.items_[choice - 1].GetMentalHeal());
+          player.Heal(player.inventory_.items_[choice - 1].GetHealAmount(),
+                      player.inventory_.items_[choice - 1].GetMentalHeal());
           View::ViewMessage(
               u8"Вы использовали " +
               player.inventory_.items_[choice - 1].GetName() +
@@ -216,51 +218,47 @@ void Controller::HandleInventoryInCombatMenu(int choice, Player& player) {
   }
 }
 
-void Controller::HandleInventoryMeleeMenu(int choice, Player& player) 
-{
-    switch (choice) 
-    {
+void Controller::HandleInventoryMeleeMenu(int choice, Player& player) {
+  switch (choice) {
     case 0:
-        state_->current_state_ = States::kPlayerMenu;
-        break;
+      state_->current_state_ = States::kPlayerMenu;
+      break;
     default:
-        if (choice <= player.inventory_.melees_.size()) 
-        {
-            player.current_melee_ = player.inventory_.melees_[choice - 1];
-            View::ViewMessage(u8"Вы сменили оружие на " + player.inventory_.melees_[choice - 1].GetName());
-            std::cin.ignore();
-        }
-        else 
-        {
-			std::cin.ignore();
-			View::ViewMessage(u8"Некорректный ввод!");
-        }
-    }
+      if (choice <= player.inventory_.melees_.size()) {
+        player.current_melee_ = player.inventory_.melees_[choice - 1];
+        View::ViewMessage(u8"Вы сменили оружие на " +
+                          player.inventory_.melees_[choice - 1].GetName());
+        std::cin.ignore();
+      } else {
+        std::cin.ignore();
+        View::ViewMessage(u8"Некорректный ввод!");
+      }
+  }
 }
 
-void Controller::HandleInventoryGunMenu(int choice, Player& player) 
-{
-	switch (choice)
-	{
-	case 0:
-		state_->current_state_ = States::kPlayerMenu;
-		break;
-	default:
-		if (choice <= player.inventory_.guns_.size())
-		{
-			player.current_gun_ = player.inventory_.guns_[choice - 1];
-			View::ViewMessage(u8"Вы сменили оружие на " + player.inventory_.guns_[choice - 1].GetName());
-			std::cin.ignore();
-		}
-		else
-		{
-			std::cin.ignore();
-			View::ViewMessage(u8"Некорректный ввод!");
-		}
-	}
+void Controller::HandleInventoryGunMenu(int choice, Player& player) {
+  switch (choice) {
+    case 0:
+      state_->current_state_ = States::kPlayerMenu;
+      break;
+    default:
+      if (choice <= player.inventory_.guns_.size()) {
+        player.current_gun_ = player.inventory_.guns_[choice - 1];
+        View::ViewMessage(u8"Вы сменили оружие на " +
+                          player.inventory_.guns_[choice - 1].GetName());
+        std::cin.ignore();
+      } else {
+        std::cin.ignore();
+        View::ViewMessage(u8"Некорректный ввод!");
+      }
+  }
 }
 
-void Controller::HandleRoomMenu(int choice, std::vector<Enemy>& all_enemies) {
+void Controller::HandleRoomMenu(int choice, Player& player,
+                                std::vector<Enemy>& all_enemies,
+                                std::vector<MeleeWeapon>& all_melee,
+                                std::vector<GunWeapon>& all_guns,
+                                std::vector<Item> all_items) {
   switch (choice) {
     case 1:
       state_->current_state_ = States::kGameMenu;
@@ -280,6 +278,24 @@ void Controller::HandleRoomMenu(int choice, std::vector<Enemy>& all_enemies) {
             View::ViewMessage(u8"На вас нападает противник!");
             state_->current_state_ = States::kCombatMenu;
             break;
+          case RoomType::kChest:
+            std::mt19937 gen(std::random_device{}());
+            std::uniform_int_distribution<int> dist1(1, 3);
+            int loot_type = dist1(gen);
+            std::uniform_int_distribution<int> dist2(1, 10);
+            int loot_id = dist2(gen);
+            std::string str_loot_id = std::to_string(loot_id);
+            switch (loot_type) {
+              case 1:
+                player.inventory_.AddMelee(str_loot_id, all_melee);
+                break;
+              case 2:
+                player.inventory_.AddGun(str_loot_id, all_guns);
+                break;
+              case 3:
+                player.inventory_.AddItem(str_loot_id, all_items);
+                break;
+            }
         }
         state_->current_room_.is_checked_ = true;
       } else {
@@ -296,7 +312,8 @@ void Controller::HandleRoomMenu(int choice, std::vector<Enemy>& all_enemies) {
   }
 }
 
-void Controller::HandleRoomChooseMenu(int choice, std::vector<Room>& all_rooms) {
+void Controller::HandleRoomChooseMenu(int choice,
+                                      std::vector<Room>& all_rooms) {
   switch (choice) {
     case 0:
       state_->current_state_ = States::kRoomMenu;
@@ -314,34 +331,32 @@ void Controller::HandleRoomChooseMenu(int choice, std::vector<Room>& all_rooms) 
   }
 }
 
-void Controller::HandleInventoryItemsMenu(int choice, Player& player) 
-{
-	switch (choice) {
-	case 0:
-		state_->current_state_ = States::kPlayerMenu;
-		break;
-	default:
-		if (choice <= player.inventory_.items_.size()) {
-			if (player.GetHealth() < player.GetMaxHealth()) {
-				player.Heal(player.inventory_.items_[choice - 1].GetHealAmount(), player.inventory_.items_[choice - 1].GetMentalHeal());
-				View::ViewMessage(
-					u8"Вы использовали " +
-					player.inventory_.items_[choice - 1].GetName() +
-					u8", вы восстановили " +
-					std::to_string(
-						player.inventory_.items_[choice - 1].GetHealAmount()));
-				std::cin.ignore();
-				player.inventory_.RemoveItem(
-					player.inventory_.items_[choice - 1].GetID());
-			}
-			else {
-				View::ViewMessage(u8"У вас уже полное здоровье");
-			}
-			std::cin.ignore();
-		}
-		else {
-			std::cin.ignore();
-			View::ViewMessage(u8"Некорректный ввод!");
-		}
-	}
+void Controller::HandleInventoryItemsMenu(int choice, Player& player) {
+  switch (choice) {
+    case 0:
+      state_->current_state_ = States::kPlayerMenu;
+      break;
+    default:
+      if (choice <= player.inventory_.items_.size()) {
+        if (player.GetHealth() < player.GetMaxHealth()) {
+          player.Heal(player.inventory_.items_[choice - 1].GetHealAmount(),
+                      player.inventory_.items_[choice - 1].GetMentalHeal());
+          View::ViewMessage(
+              u8"Вы использовали " +
+              player.inventory_.items_[choice - 1].GetName() +
+              u8", вы восстановили " +
+              std::to_string(
+                  player.inventory_.items_[choice - 1].GetHealAmount()));
+          std::cin.ignore();
+          player.inventory_.RemoveItem(
+              player.inventory_.items_[choice - 1].GetID());
+        } else {
+          View::ViewMessage(u8"У вас уже полное здоровье");
+        }
+        std::cin.ignore();
+      } else {
+        std::cin.ignore();
+        View::ViewMessage(u8"Некорректный ввод!");
+      }
+  }
 }
