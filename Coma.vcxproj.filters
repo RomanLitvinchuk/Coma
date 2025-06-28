@@ -36,16 +36,13 @@
     <ClCompile Include="inventory.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="item.cc">
+    <ClCompile Include="item_loader.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="melee_loader.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="player.cc">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="states.cc">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="view.cc">

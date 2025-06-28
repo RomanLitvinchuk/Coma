@@ -12,7 +12,7 @@ std::vector<Item> LoadAllItems(const std::string& filename) {
   std::ifstream file(filename);
 
   if (!file.is_open()) {
-    View::ShowMessage(u8"Failed to load file items.txt");
+    View::ViewMessage(u8"Failed to load file items.txt");
     return items;
   }
 
@@ -21,7 +21,7 @@ std::vector<Item> LoadAllItems(const std::string& filename) {
   int current_id = -1;
 
   while (std::getline(file, line)) {
-    // Пропускаем комментарии и пустые строки
+
     if (line.empty() || line.find("//") == 0) continue;
 
     if (line[0] == '[' && line.back() == ']') {
@@ -29,9 +29,10 @@ std::vector<Item> LoadAllItems(const std::string& filename) {
       if (current_id != -1 && !current_item_data.empty()) {
         try {
           items.emplace_back(std::to_string(current_id), current_item_data["name"],
-                             std::stoi(current_item_data["healAmount"]));
+                             std::stoi(current_item_data["healAmount"]),
+                             std::stoi(current_item_data["mental_heal"]));
         } catch (const std::exception& e) {
-          View::ShowMessage(u8"Failed to parsing item data");
+          View::ViewMessage(u8"Failed to parsing item data");
         }
 
         current_item_data.clear();
@@ -41,7 +42,7 @@ std::vector<Item> LoadAllItems(const std::string& filename) {
       try {
         current_id = std::stoi(line.substr(1, line.size() - 2));
       } catch (const std::exception& e) {
-        View::ShowMessage(u8"Invalid ID format");
+        View::ViewMessage(u8"Invalid ID format");
         current_id = -1;
       }
     } else {
@@ -59,9 +60,10 @@ std::vector<Item> LoadAllItems(const std::string& filename) {
   if (current_id != -1 && !current_item_data.empty()) {
     try {
       items.emplace_back(std::to_string(current_id), current_item_data["name"],
-                         std::stoi(current_item_data["healAmount"]));
+                         std::stoi(current_item_data["healAmount"]),
+                         std::stoi(current_item_data["mental_heal"]));
     } catch (const std::exception& e) {
-      View::ShowMessage(u8"Failed to parsing item data");
+      View::ViewMessage(u8"Failed to parsing item data");
     }
   }
 
@@ -71,11 +73,12 @@ std::vector<Item> LoadAllItems(const std::string& filename) {
 Item ItemFactory(const std::vector<Item>& all_items, const std::string& item_id) {
   bool found = false;
 
-  // Ищем шаблон предмета с нужным ID
   for (const auto& templ : all_items) {
     if (templ.GetID() == item_id) {
         return templ;
     }
-    // if (!found)
+    if (!found) {
+        View::ViewMessage(u8"Not found item template");
+    }
   }
 }

@@ -2,6 +2,7 @@
 #define GUN_H_
 
 #include <string>
+#include <vector>
 
 class GunWeapon {
  private:
@@ -27,6 +28,7 @@ class GunWeapon {
   int GetCurrentCooldown() const { return current_cooldown_; }
 };
 
-GunWeapon GunLoader(const std::string& filename, const std::string& gun_id);
+std::vector<GunWeapon> LoadAllGuns(const std::string& filename);
+GunWeapon GunFactory(const std::string& gun_id, const std::vector<GunWeapon>& all_guns);
 
 #endif  // GUN_H_

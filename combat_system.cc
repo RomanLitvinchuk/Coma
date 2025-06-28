@@ -14,15 +14,15 @@ void CombatSystem::PlayerAttack(Enemy& enemy, Player& player) {
   double hit_chance = dis(gen);
   if (hit_chance < player.current_melee_.GetAccuracy()) {
     enemy.TakeDamage(CalculateMeleeDamage(player));
-    View::ShowMessage(u8"Вы нанесли " +
+    View::ViewMessage(u8"Вы нанесли " +
                       std::to_string(CalculateMeleeDamage(player)) + u8" урона " +
                       enemy.GetName() + "\n");
     if (enemy.GetHealth() <= 0) {
-        View::ShowMessage(u8"Вы убили " + enemy.GetName());
+        View::ViewMessage(u8"Вы убили " + enemy.GetName());
     }
 
   } else {
-    View::ShowMessage(u8"Мимо!");
+    View::ViewMessage(u8"Мимо!");
   }
 }
 
@@ -30,9 +30,11 @@ void CombatSystem::EnemyTurn(Player& player, std::vector<Enemy>& enemies) {
   for (auto& current_enemy : enemies) {
     if (current_enemy.IsAlive()) {
       player.TakeDamage(current_enemy.GetAttack());
-      View::ShowMessage(u8"Враг " + current_enemy.GetName() + u8" нанёс вам " +
+      player.TakeMentalDamage(current_enemy.GetMentalAttack());
+      View::ViewMessage(u8"Враг " + current_enemy.GetName() + u8" нанёс вам " +
                         std::to_string(current_enemy.GetAttack()) +
                         u8" урона!");
+      View::ViewMessage(u8"Враг " + current_enemy.GetName() + u8" бьёт по вашей психике на " + std::to_string(current_enemy.GetMentalAttack()) + u8" урона");
     }
     std::cin.ignore();
   }

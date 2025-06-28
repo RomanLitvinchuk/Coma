@@ -8,13 +8,15 @@ class Enemy {
   std::string id_;
   int health_;
   int attack_;
+  int mental_attack_;
   int experience_;
   std::string name_;
 
  public:
-  Enemy(std::string id, const std::string& name, int health, int attack,
+  Enemy(std::string id, const std::string& name, int health, int attack, int mental_attack,
         int experience);
   int GetAttack() const { return attack_; }
+  int GetMentalAttack() const { return mental_attack_; }
   int GetExperience() const { return experience_; }
   std::string GetName() const { return name_; }
   std::string GetID() const { return id_; }

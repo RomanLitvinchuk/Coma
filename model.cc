@@ -21,9 +21,11 @@ int main() {
     bool is_running = true;
     std::vector<MeleeWeapon> all_melee = LoadAllMelee("melee.txt");
     MeleeWeapon example_melee = MeleeFactory("1", all_melee);
-    GunWeapon example_gun = GunLoader("guns.txt", "1");
+    std::vector<GunWeapon> all_guns = LoadAllGuns("guns.txt");
+    GunWeapon example_gun = GunFactory("1", all_guns);
     Player player(example_melee, example_gun);
     player.inventory_.AddMelee("1", all_melee);
+    player.inventory_.AddGun("1", all_guns);
     std::vector<Enemy> all_enemies = LoadAllEnemies("enemies.txt");
     std::vector<Item> all_items = LoadAllItems("items.txt");
     std::vector<Room> all_rooms = LoadAllRooms("rooms.txt");
@@ -40,7 +42,7 @@ int main() {
       View::ClearScreen();
       switch (state.current_state_) {
         case States::kMainMenu: {
-          View::ShowMainMenu();
+          View::ViewMainMenu();
           std::cin >> input;
           int choice = std::stoi(input);
           controller.HandleMainMenu(choice);
@@ -48,7 +50,7 @@ int main() {
         }
 
         case States::kGameMenu: {
-          View::ShowGameMenu();
+          View::ViewGameMenu();
           std::cin >> input;
           int choice = std::stoi(input);
           controller.HandleGameMenu(choice);
@@ -56,7 +58,7 @@ int main() {
         }
 
         case States::kPlayerMenu: {
-          View::ShowPlayerMenu(player);
+          View::ViewPlayerMenu(player);
           std::cin >> input;
           int choice = std::stoi(input);
           controller.HandlePlayerMenu(choice);
@@ -64,7 +66,7 @@ int main() {
         }
 
         case States::kLevelMenu: {
-          View::ShowLevelMenu(player);
+          View::ViewLevelMenu(player);
           std::cin >> input;
           int choice = std::stoi(input);
           controller.HandleLevelMenu(choice, player);
@@ -72,7 +74,7 @@ int main() {
         }
 
         case States::kCombatMenu: {
-          View::ShowCombatMenu(player);
+          View::ViewCombatMenu(player);
           std::cin >> input;
           int choice = std::stoi(input);
           auto result =
@@ -83,14 +85,14 @@ int main() {
               for (auto& current_enemy : state.enemies_) {
                 player.GainExperience(current_enemy.GetExperience());
               }
-              View::ShowMessage(u8"Победа!");
+              View::ViewMessage(u8"Победа!");
               state.enemies_.clear();
               std::cin.ignore();
               state.current_state_ = States::kGameMenu;
               break;
             case CombatSystem::kEnemyWin:
               state.enemies_.clear();
-              View::ShowMessage(
+              View::ViewMessage(
                   u8"Вы проиграли, возвращение в главное меню...");
               std::cin.ignore();
               state.current_state_ = States::kMainMenu;
@@ -99,7 +101,7 @@ int main() {
           break;
         }
         case States::kChooseEnemiesMenu: {
-          View::ShowEnemyListInCombat(state.enemies_);
+          View::ViewEnemyListInCombat(state.enemies_);
           std::cin >> input;
           int choice = std::stoi(input);
           auto result =
@@ -109,13 +111,13 @@ int main() {
               for (auto& current_enemy : state.enemies_) {
                 player.GainExperience(current_enemy.GetExperience());
               }
-              View::ShowMessage(u8"Победа!");
+              View::ViewMessage(u8"Победа!");
               state.enemies_.clear();
               std::cin.ignore();
               state.current_state_ = States::kGameMenu;
               break;
             case CombatSystem::kEnemyWin:
-              View::ShowMessage(
+              View::ViewMessage(
                   u8"Вы проиграли, возвращение в главное меню...");
               std::cin.ignore();
               state.current_state_ = States::kMainMenu;
@@ -123,43 +125,57 @@ int main() {
           }
           break;
         }
+
         case States::kEnemyListMenu: {
-          View::ShowEnemyList(state.enemies_);
+          View::ViewEnemyList(state.enemies_);
           std::cin >> input;
           int choice = std::stoi(input);
           controller.HandleEnemyListMenu(choice);
           break;
         }
+
         case States::kInventoryInCombatMenu: {
-          View::ShowInventoryItemsMenu(player);
+          View::ViewInventoryItemsMenu(player);
           std::cin >> input;
           int choice = std::stoi(input);
           controller.HandleInventoryInCombatMenu(choice, player);
           break;
         }
+
         case States::kInventoryItemsMenu: {
-          View::ShowInventoryItemsMenu(player);
+          View::ViewInventoryItemsMenu(player);
           std::cin >> input;
           int choice = std::stoi(input);
           controller.HandleInventoryItemsMenu(choice, player);
           break;
         }
+
         case States::kInventoryMeleeMenu: {
-          View::ShowInventoryMeleeMenu(player);
+          View::ViewInventoryMeleeMenu(player);
           std::cin >> input;
           int choice = std::stoi(input);
           controller.HandleInventoryMeleeMenu(choice, player);
           break;
         }
+
+        case States::kInventoryGunMenu: {
+          View::ViewInventoryGunMenu(player);
+          std::cin >> input;
+          int choice = std::stoi(input);
+          controller.HandleInventoryGunMenu(choice, player);
+          break;
+        }
+
         case States::kRoomMenu: {
-          View::ShowRoomMenu(state);
+          View::ViewRoomMenu(state);
           std::cin >> input;
           int choice = std::stoi(input);
           controller.HandleRoomMenu(choice, all_enemies);
           break;
         }
+
         case States::kChooseRoomMenu:
-          View::ShowRoomChooseMenu(state, all_rooms);
+          View::ViewRoomChooseMenu(state, all_rooms);
           std::cin >> input;
           int choice = std::stoi(input);
           controller.HandleRoomChooseMenu(choice, all_rooms);

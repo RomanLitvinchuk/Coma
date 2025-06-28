@@ -13,7 +13,7 @@ std::vector<Enemy> LoadAllEnemies(const std::string& filename) {
   std::ifstream file(filename);
 
   if (!file.is_open()) {
-    View::ShowMessage(u8"Failed to load file enemies.txt");
+    View::ViewMessage(u8"Failed to load file enemies.txt");
     return enemies;
   }
 
@@ -22,7 +22,6 @@ std::vector<Enemy> LoadAllEnemies(const std::string& filename) {
   int current_id = -1;
 
   while (std::getline(file, line)) {
-    // Пропускаем комментарии и пустые строки
     if (line.empty() || line.find("//") == 0) continue;
 
     if (line[0] == '[' && line.back() == ']') {
@@ -33,9 +32,10 @@ std::vector<Enemy> LoadAllEnemies(const std::string& filename) {
                                current_enemy_data["name"],
                                std::stoi(current_enemy_data["health"]),
                                std::stoi(current_enemy_data["attack"]),
+                               std::stoi(current_enemy_data["mental_attack"]),
                                std::stoi(current_enemy_data["experience"]));
         } catch (const std::exception& e) {
-          View::ShowMessage(u8"Failed to parsing enemy data");
+          View::ViewMessage(u8"Failed to parsing enemy data");
         }
 
         current_enemy_data.clear();
@@ -45,7 +45,7 @@ std::vector<Enemy> LoadAllEnemies(const std::string& filename) {
       try {
         current_id = std::stoi(line.substr(1, line.size() - 2));
       } catch (const std::exception& e) {
-        View::ShowMessage(u8"Invalid ID format");
+        View::ViewMessage(u8"Invalid ID format");
         current_id = -1;
       }
     } else {
@@ -65,9 +65,10 @@ std::vector<Enemy> LoadAllEnemies(const std::string& filename) {
       enemies.emplace_back(std::to_string(current_id), current_enemy_data["name"],
                            std::stoi(current_enemy_data["health"]),
                            std::stoi(current_enemy_data["attack"]),
+                           std::stoi(current_enemy_data["mental_attack"]),
                            std::stoi(current_enemy_data["experience"]));
     } catch (const std::exception& e) {
-      View::ShowMessage(u8"Failed to parsing enemy data");
+      View::ViewMessage(u8"Failed to parsing enemy data");
     }
   }
 
@@ -89,9 +90,8 @@ std::vector<Enemy> EnemyFactory(const std::vector<Enemy>& all_enemies, const std
 			}
 		}
 
-		// Если враг не найден - бросаем исключение
 		if (!found) {
-			// throw std::runtime_error("Enemy template '" + enemyId + "' not found");
+            View::ViewMessage(u8"Not found enemy template");
 		}
 	}
 

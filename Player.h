@@ -26,6 +26,7 @@ class Player {
   Player(MeleeWeapon& melee, GunWeapon& gun);
   // Armor CurrentArmor;
   void TakeDamage(int damage);
+  void TakeMentalDamage(int mental_damage);
   bool IsAlive() const;
   // bool IsDefending() const { return isDefend; }
   void SetDefending() { is_defend_ = true; }
@@ -45,7 +46,10 @@ class Player {
   void GunLevelUp() { ++gun_level_; }
   void IntelligenceUp() { ++intelligence_; }
   void MaxHealthUp() { max_health_ += 20; }
-  void Heal(int amount) { health_ += amount; }
+  void Heal(int amount_health, int mental_amount) { 
+	  health_ += amount_health; 
+	  mental_health_ += mental_amount;
+  }
 };
 
 #endif  // PLAYER_H_

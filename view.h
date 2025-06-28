@@ -12,20 +12,21 @@
 class View {
  public:
   static void ClearScreen();
-  static void ShowMainMenu();
-  static void ShowGameMenu();
-  static void ShowCombatMenu(const Player& player);
-  static void ShowMessage(const std::string& str);
-  static void ShowPlayerMenu(const Player& player);
-  static void ShowLevelMenu(const Player& player);
-  static void ShowEnemyList(const std::vector<Enemy>& enemies);
-  static void ShowEnemyListInCombat(const std::vector<Enemy>& enemies);
-  static void ShowMeleeStats(const MeleeWeapon& melee);
-  static void ShowInventoryItemsMenu(const Player& player);
-  static void ShowRoomMenu(const GameState& state);
-  static void ShowRoomChooseMenu(const GameState& state,
+  static void ViewMainMenu();
+  static void ViewGameMenu();
+  static void ViewCombatMenu(const Player& player);
+  static void ViewMessage(const std::string& str);
+  static void ViewPlayerMenu(const Player& player);
+  static void ViewLevelMenu(const Player& player);
+  static void ViewEnemyList(const std::vector<Enemy>& enemies);
+  static void ViewEnemyListInCombat(const std::vector<Enemy>& enemies);
+  static void ViewMeleeStats(const MeleeWeapon& melee);
+  static void ViewInventoryItemsMenu(const Player& player);
+  static void ViewRoomMenu(const GameState& state);
+  static void ViewRoomChooseMenu(const GameState& state,
                                  const std::vector<Room>& all_rooms);
-  static void ShowInventoryMeleeMenu(const Player& player);
+  static void ViewInventoryMeleeMenu(const Player& player);
+  static void ViewInventoryGunMenu(const Player& player);
 };
 
 #endif  // VIEW_H_

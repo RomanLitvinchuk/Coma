@@ -134,12 +134,11 @@
     <ClCompile Include="enemy_loader.cc" />
     <ClCompile Include="gun_loader.cc" />
     <ClCompile Include="inventory.cc" />
-    <ClCompile Include="item.cc" />
+    <ClCompile Include="item_loader.cc" />
     <ClCompile Include="melee_loader.cc" />
     <ClCompile Include="model.cc" />
     <ClCompile Include="player.cc" />
     <ClCompile Include="room_loader.cc" />
-    <ClCompile Include="states.cc" />
     <ClCompile Include="view.cc" />
   </ItemGroup>
   <ItemGroup>

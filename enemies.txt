@@ -2,11 +2,15 @@
 name=shadow
 health=20
 attack=10
+mental_attack=5
 experience=20
+mental_attack=5
 
 [2]
 name=fear
 health=40
 attack=20
+mental_attack=10
 experience=30
+mental_attack=10
 

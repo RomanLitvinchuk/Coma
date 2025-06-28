@@ -8,7 +8,7 @@ void Controller::HandleMainMenu(int choice) {
   switch (choice) {
     case 1:  // Новая игра
       state_->current_state_ = States::kGameMenu;
-      View::ShowMessage(u8"Новая игра начата!");
+      View::ViewMessage(u8"Новая игра начата!");
       break;
     // case 2: Сохранение
     //	std::cin.ignore();
@@ -17,7 +17,7 @@ void Controller::HandleMainMenu(int choice) {
       break;
     default:
       std::cin.ignore();
-      View::ShowMessage(u8"Некорректный ввод!");
+      View::ViewMessage(u8"Некорректный ввод!");
   }
 }
 
@@ -35,7 +35,7 @@ void Controller::HandleGameMenu(int choice) {
       break;
     default:
       std::cin.ignore();
-      View::ShowMessage(u8"Некорректный ввод!");
+      View::ViewMessage(u8"Некорректный ввод!");
   }
 }
 
@@ -50,14 +50,15 @@ void Controller::HandlePlayerMenu(int choice) {
     case 3:
         state_->current_state_ = States::kInventoryMeleeMenu;
         break;
-    //case 4: //Guns
-
+    case 4:
+        state_->current_state_ = States::kInventoryGunMenu;
+        break;
     case 5:
         state_->current_state_ = States::kInventoryItemsMenu;
         break;
     default:
       std::cin.ignore();
-      View::ShowMessage(u8"Некорректный ввод!");
+      View::ViewMessage(u8"Некорректный ввод!");
   }
 }
 
@@ -72,7 +73,7 @@ void Controller::HandleLevelMenu(int choice, Player& player) {
         player.SetLevelPoints(player.GetLevelPoints() - 1);
       } else {
         std::cin.ignore();
-        View::ShowMessage(u8"Не хватает очков характеристик!");
+        View::ViewMessage(u8"Не хватает очков характеристик!");
       }
       break;
     case 3:
@@ -81,7 +82,7 @@ void Controller::HandleLevelMenu(int choice, Player& player) {
         player.SetLevelPoints(player.GetLevelPoints() - 1);
       } else {
         std::cin.ignore();
-        View::ShowMessage(u8"Не хватает очков характеристик!");
+        View::ViewMessage(u8"Не хватает очков характеристик!");
       }
       break;
     case 4:
@@ -90,7 +91,7 @@ void Controller::HandleLevelMenu(int choice, Player& player) {
         player.SetLevelPoints(player.GetLevelPoints() - 1);
       } else {
         std::cin.ignore();
-        View::ShowMessage(u8"Не хватает очков характеристик!");
+        View::ViewMessage(u8"Не хватает очков характеристик!");
       }
       break;
     case 5:
@@ -99,12 +100,12 @@ void Controller::HandleLevelMenu(int choice, Player& player) {
         player.SetLevelPoints(player.GetLevelPoints() - 1);
       } else {
         std::cin.ignore();
-        View::ShowMessage(u8"Не хватает очков характеристик!");
+        View::ViewMessage(u8"Не хватает очков характеристик!");
       }
       break;
     default:
       std::cin.ignore();
-      View::ShowMessage(u8"Некорректный ввод!");
+      View::ViewMessage(u8"Некорректный ввод!");
   }
 }
 
@@ -133,7 +134,7 @@ CombatSystem::CombatState Controller::HandleCombatMenu(
       break;
     default:
       std::cin.ignore();
-      View::ShowMessage(u8"Некорректный ввод!");
+      View::ViewMessage(u8"Некорректный ввод!");
       return CombatSystem::kContinue;
   }
 }
@@ -168,7 +169,7 @@ CombatSystem::CombatState Controller::HandleChooseEnemyMenu(
         }
       } else {
         std::cin.ignore();
-        View::ShowMessage(u8"Некорректный ввод!");
+        View::ViewMessage(u8"Некорректный ввод!");
         return CombatSystem::kContinue;
       }
       break;
@@ -182,7 +183,7 @@ void Controller::HandleEnemyListMenu(int choice) {
       break;
     default:
       std::cin.ignore();
-      View::ShowMessage(u8"Некорректный ввод!");
+      View::ViewMessage(u8"Некорректный ввод!");
   }
 }
 
@@ -194,8 +195,8 @@ void Controller::HandleInventoryInCombatMenu(int choice, Player& player) {
     default:
       if (choice <= player.inventory_.items_.size()) {
         if (player.GetHealth() < player.GetMaxHealth()) {
-          player.Heal(player.inventory_.items_[choice - 1].GetHealAmount());
-          View::ShowMessage(
+          player.Heal(player.inventory_.items_[choice - 1].GetHealAmount(), player.inventory_.items_[choice - 1].GetMentalHeal());
+          View::ViewMessage(
               u8"Вы использовали " +
               player.inventory_.items_[choice - 1].GetName() +
               u8", вы восстановили " +
@@ -205,12 +206,12 @@ void Controller::HandleInventoryInCombatMenu(int choice, Player& player) {
           player.inventory_.RemoveItem(
               player.inventory_.items_[choice - 1].GetID());
         } else {
-          View::ShowMessage(u8"У вас уже полное здоровье");
+          View::ViewMessage(u8"У вас уже полное здоровье");
         }
         std::cin.ignore();
       } else {
         std::cin.ignore();
-        View::ShowMessage(u8"Некорректный ввод!");
+        View::ViewMessage(u8"Некорректный ввод!");
       }
   }
 }
@@ -226,15 +227,37 @@ void Controller::HandleInventoryMeleeMenu(int choice, Player& player)
         if (choice <= player.inventory_.melees_.size()) 
         {
             player.current_melee_ = player.inventory_.melees_[choice - 1];
-            View::ShowMessage(u8"Вы сменили оружие на " + player.inventory_.melees_[choice - 1].GetName());
+            View::ViewMessage(u8"Вы сменили оружие на " + player.inventory_.melees_[choice - 1].GetName());
             std::cin.ignore();
         }
         else 
         {
 			std::cin.ignore();
-			View::ShowMessage(u8"Некорректный ввод!");
+			View::ViewMessage(u8"Некорректный ввод!");
         }
     }
+}
+
+void Controller::HandleInventoryGunMenu(int choice, Player& player) 
+{
+	switch (choice)
+	{
+	case 0:
+		state_->current_state_ = States::kPlayerMenu;
+		break;
+	default:
+		if (choice <= player.inventory_.guns_.size())
+		{
+			player.current_gun_ = player.inventory_.guns_[choice - 1];
+			View::ViewMessage(u8"Вы сменили оружие на " + player.inventory_.guns_[choice - 1].GetName());
+			std::cin.ignore();
+		}
+		else
+		{
+			std::cin.ignore();
+			View::ViewMessage(u8"Некорректный ввод!");
+		}
+	}
 }
 
 void Controller::HandleRoomMenu(int choice, std::vector<Enemy>& all_enemies) {
@@ -247,21 +270,21 @@ void Controller::HandleRoomMenu(int choice, std::vector<Enemy>& all_enemies) {
         std::cin.ignore();
         switch (state_->current_room_.type_) {
           case RoomType::kDefault:
-            View::ShowMessage(
+            View::ViewMessage(
                 u8"Вы исследуете комнату, но не находите ничего интересного");
             break;
           case RoomType::kEnemies:
             state_->enemies_.clear();
             state_->enemies_ =
                 EnemyFactory(all_enemies, state_->current_room_.enemy_ids_);
-            View::ShowMessage(u8"На вас нападает противник!");
+            View::ViewMessage(u8"На вас нападает противник!");
             state_->current_state_ = States::kCombatMenu;
             break;
         }
         state_->current_room_.is_checked_ = true;
       } else {
         std::cin.ignore();
-        View::ShowMessage(u8"В этой комнате больше нет ничего интересного");
+        View::ViewMessage(u8"В этой комнате больше нет ничего интересного");
       }
       break;
     case 3:
@@ -269,7 +292,7 @@ void Controller::HandleRoomMenu(int choice, std::vector<Enemy>& all_enemies) {
       break;
     default:
       std::cin.ignore();
-      View::ShowMessage(u8"Некорректный ввод!");
+      View::ViewMessage(u8"Некорректный ввод!");
   }
 }
 
@@ -286,7 +309,7 @@ void Controller::HandleRoomChooseMenu(int choice, std::vector<Room>& all_rooms) 
         break;
       } else {
         std::cin.ignore();
-        View::ShowMessage(u8"Некорректный ввод!");
+        View::ViewMessage(u8"Некорректный ввод!");
       }
   }
 }
@@ -300,8 +323,8 @@ void Controller::HandleInventoryItemsMenu(int choice, Player& player)
 	default:
 		if (choice <= player.inventory_.items_.size()) {
 			if (player.GetHealth() < player.GetMaxHealth()) {
-				player.Heal(player.inventory_.items_[choice - 1].GetHealAmount());
-				View::ShowMessage(
+				player.Heal(player.inventory_.items_[choice - 1].GetHealAmount(), player.inventory_.items_[choice - 1].GetMentalHeal());
+				View::ViewMessage(
 					u8"Вы использовали " +
 					player.inventory_.items_[choice - 1].GetName() +
 					u8", вы восстановили " +
@@ -312,13 +335,13 @@ void Controller::HandleInventoryItemsMenu(int choice, Player& player)
 					player.inventory_.items_[choice - 1].GetID());
 			}
 			else {
-				View::ShowMessage(u8"У вас уже полное здоровье");
+				View::ViewMessage(u8"У вас уже полное здоровье");
 			}
 			std::cin.ignore();
 		}
 		else {
 			std::cin.ignore();
-			View::ShowMessage(u8"Некорректный ввод!");
+			View::ViewMessage(u8"Некорректный ввод!");
 		}
 	}
 }

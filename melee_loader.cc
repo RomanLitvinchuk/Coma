@@ -12,7 +12,7 @@ std::vector<MeleeWeapon> LoadAllMelee(const std::string& filename) {
   std::ifstream file(filename);
 
   if (!file.is_open()) {
-    View::ShowMessage(u8"Failed to load file melee.txt");
+    View::ViewMessage(u8"Failed to load file melee.txt");
     return weapons;
   }
 
@@ -32,7 +32,7 @@ std::vector<MeleeWeapon> LoadAllMelee(const std::string& filename) {
                                std::stoi(current_weapon_data["damage"]),
                                std::stoi(current_weapon_data["accuracy"]));
         } catch (const std::exception& e) {
-          View::ShowMessage(u8"Failed to parse melee weapon data");
+          View::ViewMessage(u8"Failed to parse melee weapon data");
         }
 
         current_weapon_data.clear();
@@ -58,7 +58,7 @@ std::vector<MeleeWeapon> LoadAllMelee(const std::string& filename) {
                            std::stoi(current_weapon_data["damage"]),
                            std::stoi(current_weapon_data["accuracy"]));
     } catch (const std::exception& e) {
-      View::ShowMessage(u8"Failed to parse melee weapon data");
+      View::ViewMessage(u8"Failed to parse melee weapon data");
     }
   }
 

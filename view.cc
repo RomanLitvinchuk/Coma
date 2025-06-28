@@ -11,7 +11,7 @@
 
 void View::ClearScreen() { std::cout << "\033[2J\033[1;1H"; }
 
-void View::ShowMainMenu() {
+void View::ViewMainMenu() {
   std::cout << u8"╔═════════КОМА═════════╗\n"
             << u8"║ › [1] Новая игра     ║\n"
             << u8"║ › [2] Загрузить игру ║\n"
@@ -19,7 +19,7 @@ void View::ShowMainMenu() {
             << u8"╚══════════════════════╝\n";
 }
 
-void View::ShowGameMenu() {
+void View::ViewGameMenu() {
   std::cout << u8"╔══════════МЕНЮ═════════╗\n"
             << u8"║ › [1] Передвижение    ║\n"
             << u8"║ › [2] Персонаж        ║\n"
@@ -28,17 +28,18 @@ void View::ShowGameMenu() {
             << u8"╚═══════════════════════╝\n";
 }
 
-void View::ShowCombatMenu(const Player& player) {
-  std::cout << u8"╔═══════════════════════════╗\n"
-            << u8"║ › [1] Атака               ║\n"
-            << u8"║ › [2] Защита              ║\n"
-            << u8"║ › [3] Предметы            ║\n"
-            << u8"║ › [4] Осмотр противников  ║\n"
-            << u8"╚═══════════════════════════╝\n"
-            << u8"HP: " << player.GetHealth() << "\n";
+void View::ViewCombatMenu(const Player& player) {
+    std::cout << u8"╔═══════════════════════════╗\n"
+              << u8"║ › [1] Атака               ║\n"
+              << u8"║ › [2] Защита              ║\n"
+              << u8"║ › [3] Предметы            ║\n"
+              << u8"║ › [4] Осмотр противников  ║\n"
+              << u8"╚═══════════════════════════╝\n"
+              << u8"HP: " << player.GetHealth() << "\n"
+              << u8"MP: " << player.GetMentalHealth() << "\n";
 }
 
-void View::ShowEnemyListInCombat(const std::vector<Enemy>& enemies) {
+void View::ViewEnemyListInCombat(const std::vector<Enemy>& enemies) {
   std::cout << u8"╔═══════════════════════════╗\n" << u8"║ › [0] Назад\n";
 
   for (int i = 1; i <= enemies.size(); ++i) {
@@ -48,7 +49,7 @@ void View::ShowEnemyListInCombat(const std::vector<Enemy>& enemies) {
   std::cout << u8"╚═══════════════════════════╝\n";
 }
 
-void View::ShowPlayerMenu(const Player& player) {
+void View::ViewPlayerMenu(const Player& player) {
   std::cout << u8"╔══════════════PLAYER═════════════╗\n"
             << u8"║ Здоровье: " << player.GetHealth()
             << u8"                   \n"
@@ -71,7 +72,7 @@ void View::ShowPlayerMenu(const Player& player) {
             << u8"╚═════════════════════════════════╝\n";
 }
 
-void View::ShowLevelMenu(const Player& player) {
+void View::ViewLevelMenu(const Player& player) {
   std::cout << u8"╔══════════════ПРОКАЧКА══════════════╗\n"
             << u8"║ Доступные очки характеристик: " << player.GetLevelPoints()
             << u8"    \n"
@@ -92,7 +93,7 @@ void View::ShowLevelMenu(const Player& player) {
             << u8"╚════════════════════════════════════╝\n";
 }
 
-void View::ShowEnemyList(const std::vector<Enemy>& enemies) {
+void View::ViewEnemyList(const std::vector<Enemy>& enemies) {
   std::cout << u8"\n╔═════════════ВРАГИ════════════╗\n";
   for (const auto& curenemy : enemies) {
     std::cout << u8"║ [" << curenemy.GetID() << u8"]" << curenemy.GetName()
@@ -105,17 +106,17 @@ void View::ShowEnemyList(const std::vector<Enemy>& enemies) {
             << u8"╚══════════════════════════════╝\n";
 }
 
-void View::ShowMeleeStats(const MeleeWeapon& melee) {
+void View::ViewMeleeStats(const MeleeWeapon& melee) {
   std::cout << u8"[" << melee.GetID() << u8"]" << melee.GetName() << "\n"
             << u8"Урон: " << melee.GetDamage() << "\n"
             << u8"Точность: " << melee.GetAccuracy() << "\n";
 }
 
-void View::ShowMessage(const std::string& str) {
+void View::ViewMessage(const std::string& str) {
   std::cout << u8"\n" << str << "\n";
 }
 
-void View::ShowInventoryItemsMenu(const Player& player) {
+void View::ViewInventoryItemsMenu(const Player& player) {
   std::cout << u8"╔══════════════ПРЕДМЕТЫ══════════════╗\n";
   for (int i = 1; i <= player.inventory_.items_.size(); ++i) {
     std::cout << u8"║ › [" << i << u8"] "
@@ -127,7 +128,7 @@ void View::ShowInventoryItemsMenu(const Player& player) {
             << u8"╚════════════════════════════════════╝\n";
 }
 
-void View::ShowRoomMenu(const GameState& state) {
+void View::ViewRoomMenu(const GameState& state) {
   std::cout << u8"╔═════════════════════════════════╗\n"
             << u8"║ " << state.current_room_.name_ << "\n"
             << u8"║ " << state.current_room_.description_ << "\n"
@@ -137,7 +138,7 @@ void View::ShowRoomMenu(const GameState& state) {
             << u8"╚═════════════════════════════════╝\n";
 }
 
-void View::ShowRoomChooseMenu(const GameState& state,
+void View::ViewRoomChooseMenu(const GameState& state,
                               const std::vector<Room>& all_rooms) {
   std::cout << u8"╔═══════════════════════════════════╗\n";
   if (!state.current_room_.connected_rooms_.empty()) {
@@ -153,7 +154,7 @@ void View::ShowRoomChooseMenu(const GameState& state,
             << u8"╚═══════════════════════════════════╝\n";
 }
 
-void View::ShowInventoryMeleeMenu(const Player& player) 
+void View::ViewInventoryMeleeMenu(const Player& player) 
 {
     std::cout << u8"╔═════════════════════════════════╗\n";
     for (int i = 1; i <= player.inventory_.melees_.size(); ++i) 
@@ -165,3 +166,18 @@ void View::ShowInventoryMeleeMenu(const Player& player)
 		      << u8"║ › [0] Назад                        ║\n"
 		      << u8"╚════════════════════════════════════╝\n";
 }
+
+
+void View::ViewInventoryGunMenu(const Player& player)
+{
+	std::cout << u8"╔═════════════════════════════════╗\n";
+	for (int i = 1; i <= player.inventory_.guns_.size(); ++i)
+	{
+		std::cout << u8"║ › [" << i << u8"] "
+			<< player.inventory_.guns_[i - 1].GetName() << "\n";
+	}
+	std::cout << u8"║════════════════════════════════════║\n"
+		<< u8"║ › [0] Назад                        ║\n"
+		<< u8"╚════════════════════════════════════╝\n";
+}
+

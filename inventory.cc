@@ -18,8 +18,14 @@ void Inventory::RemoveItem(const std::string& item_id) {
               items_.end());
 }
 
-void Inventory::AddMelee(const std::string& melee_id, const std::vector<MeleeWeapon> all_melee) 
+void Inventory::AddMelee(const std::string& melee_id, const std::vector<MeleeWeapon>& all_melee) 
 {
     MeleeWeapon new_melee = MeleeFactory(melee_id, all_melee);
     melees_.push_back(new_melee);
+}
+
+void Inventory::AddGun(const std::string& gun_id, const std::vector<GunWeapon>& all_guns) 
+{
+    GunWeapon new_gun = GunFactory(gun_id, all_guns);
+    guns_.push_back(new_gun);
 }

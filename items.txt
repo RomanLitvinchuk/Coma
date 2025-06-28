@@ -1,7 +1,9 @@
 [1]
 name=Pie
 healAmount=30
+mental_heal=10
 
 [2]
 name=Cola
 healAmount=20
+mental_heal=5

@@ -32,7 +32,7 @@ std::vector<Room> LoadAllRooms(const std::string& filename) {
   std::ifstream file(filename);
 
   if (!file.is_open()) {
-    View::ShowMessage(u8"Failed to load file rooms.txt");
+    View::ViewMessage(u8"Failed to load file rooms.txt");
     return rooms;
   }
 
@@ -59,7 +59,7 @@ std::vector<Room> LoadAllRooms(const std::string& filename) {
                              ParseStringList(current_room_data["connections"]),
                              ParseStringList(current_room_data["enemyIds"]));
         } catch (const std::exception& e) {
-          View::ShowMessage(u8"Failed to parse room data");
+          View::ViewMessage(u8"Failed to parse room data");
         }
 
         current_room_data.clear();
@@ -92,7 +92,7 @@ std::vector<Room> LoadAllRooms(const std::string& filename) {
                          ParseStringList(current_room_data["connections"]),
                          ParseStringList(current_room_data["enemyIds"]));
     } catch (const std::exception& e) {
-      View::ShowMessage(u8"Failed to parse room data");
+      View::ViewMessage(u8"Failed to parse room data");
     }
   }
 
@@ -109,7 +109,7 @@ Room RoomFactory(const std::string id, const std::vector<Room>& all_rooms) {
   }
 
   if (!is_found) {
-    View::ShowMessage(u8"Failed to find room");
+    View::ViewMessage(u8"Failed to find room");
   }
 }
 
@@ -123,6 +123,6 @@ std::string GetRoomNameById(const std::string id,
   }
 
   if (!is_found) {
-    View::ShowMessage(u8"Failed to find room");
+    View::ViewMessage(u8"Failed to find room");
   }
 }
